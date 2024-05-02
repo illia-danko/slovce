@@ -21,7 +21,7 @@ defmodule Wordlex.WordServer do
 
   @impl true
   def init(:ok) do
-    state = %{words: Constants.words(), valid_guesses: Constants.valid_guesses()}
+    state = %{words: Constants.words()}
     {:ok, state}
   end
 
@@ -34,7 +34,7 @@ defmodule Wordlex.WordServer do
   @impl true
   def handle_call({:valid_guess?, guess}, _from, state) do
     guess = String.downcase(guess)
-    valid? = Enum.member?(state.words, guess) || Enum.member?(state.valid_guesses, guess)
+    valid? = Enum.member?(state.words, guess)
     {:reply, valid?, state}
   end
 

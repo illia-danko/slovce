@@ -1,7 +1,7 @@
 export default {
   mounted() {
     this.guess = "";
-    this.el.addEventListener("keyboard:clicked", (event) => {
+    this.el.addEventListener("keyboard:clicked", event => {
       this.onKey(event.detail.key);
     });
     this.handleEvent("keyboard:reset", () => {
@@ -24,7 +24,7 @@ export default {
       this.onBackspace();
     } else {
       key = key.toUpperCase();
-      if (key.length === 1 && key >= "A" && key <= "Z") {
+      if (key.length === 1 && ((key >= "А" && key <= "Я") || "`")) {
         this.onChar(key);
       }
     }
@@ -47,7 +47,7 @@ export default {
   },
 
   updateInputElement() {
-    [...Array(5).keys()].map((index) => {
+    [...Array(5).keys()].map(index => {
       let char = this.guess.charAt(index);
       let id = `input-tile-${index}`;
       let el = document.getElementById(id);
