@@ -62,7 +62,7 @@ defmodule WordlexWeb.GameComponent do
     ~H"""
     <div class="grid grid-rows-6 gap-1 place-content-evenly">
       <%= if @revealing? do %>
-        <.tile_rows guesses={Enum.slice(@past_guesses, 0..-2)} />
+        <.tile_rows guesses={Enum.slice(@past_guesses, 0..-2//1)} />
         <.tile_rows guesses={[List.last(@past_guesses)]} animate_class="animate-flip" />
       <% else %>
         <.tile_rows guesses={@past_guesses} />
