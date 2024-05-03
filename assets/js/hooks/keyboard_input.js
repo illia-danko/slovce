@@ -24,8 +24,44 @@ export default {
       this.onBackspace();
     } else {
       key = key.toUpperCase();
-      if (key.length === 1 && ((key >= "А" && key <= "Я") || "`")) {
-        this.onChar(key);
+      if (key.length === 1) {
+        switch (key) {
+          case "Й":
+          case "Ц":
+          case "У":
+          case "К":
+          case "Е":
+          case "Н":
+          case "Г":
+          case "Ґ":
+          case "Ш":
+          case "Щ":
+          case "З":
+          case "Х":
+          case "Ї":
+          case "Ф":
+          case "І":
+          case "В":
+          case "А":
+          case "П":
+          case "Р":
+          case "О":
+          case "Л":
+          case "Д":
+          case "Ж":
+          case "Є":
+          case "Я":
+          case "Ч":
+          case "С":
+          case "М":
+          case "И":
+          case "Т":
+          case "Ь":
+          case "Б":
+          case "Ю":
+          case "`":
+            this.onChar(key);
+        }
       }
     }
   },
