@@ -3,23 +3,17 @@ defmodule WordlexWeb.GameComponent do
 
   def header(assigns) do
     ~H"""
-    <div class="flex flex-col items-center">
-      <div class="pr-2 pl-2 w-screen border-b border-gray-300 md:w-96 md:pr-0 md:pl-0">
-        <div class="flex items-center justify-between">
-          <button type="button">
-            <span class="sr-only">Show help</span>
-            <svg class="w-6 h-6 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-          </button>
+    <div class="w-full">
+      <div class="pr-2 pl-2 border-b border-gray-300">
+        <div class="flex items-center justify-between overflow-hidden md:max-w-2xl md:mx-auto">
 
           <h1 class="p-2 text-center text-xl text-gray-800 font-semibold uppercase tracking-widest dark:text-white md:text-3xl">Wordlex</h1>
 
-          <div>
-            <button type="button" phx-click={show_settings_modal()}>
-              <span class="sr-only">Show settings</span>
+          <div class="mt-2">
+            <button type="button">
+              <span class="sr-only">Show help</span>
               <svg class="w-6 h-6 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
             </button>
             <button type="button" phx-click={show_info_modal()}>
@@ -28,12 +22,15 @@ defmodule WordlexWeb.GameComponent do
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
               </svg>
             </button>
+            <button type="button" phx-click={show_settings_modal()}>
+              <span class="sr-only">Show settings</span>
+              <svg class="w-6 h-6 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+            </button>
           </div>
         </div>
       </div>
-      <p class="p-1 text-sm text-gray-400 font-medium dark:text-gray-300 md:text-md">
-        A <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank" class="uppercase border-b border-gray-400">Wordle</a> clone written in elixir
-      </p>
     </div>
     """
   end
@@ -60,7 +57,7 @@ defmodule WordlexWeb.GameComponent do
     empty_tiles = List.duplicate(%{char: "", state: :empty}, 5) |> List.duplicate(count)
 
     ~H"""
-    <div class="grid grid-rows-6 gap-1 place-content-evenly">
+    <div class="grid grid-rows-6 gap-1">
       <%= if @revealing? do %>
         <.tile_rows guesses={Enum.slice(@past_guesses, 0..-2//1)} />
         <.tile_rows guesses={[List.last(@past_guesses)]} animate_class="animate-flip" />
@@ -97,7 +94,7 @@ defmodule WordlexWeb.GameComponent do
 
   defp tile_row(assigns) do
     ~H"""
-    <div class={"grid grid-cols-5 gap-1 place-content-evenly #{@animate_class}"}>
+    <div class={"flex grid grid-cols-5 gap-1 #{@animate_class}"}>
       <%= render_slot(@inner_block) %>
     </div>
     """
@@ -175,7 +172,7 @@ defmodule WordlexWeb.GameComponent do
       case key do
         "Backspace" ->
           ~H"""
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <svg class="h-8 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z"></path>
           </svg>
           """
@@ -188,9 +185,9 @@ defmodule WordlexWeb.GameComponent do
 
     size_classes =
       case key do
-        "Backspace" -> "h-10 w-8 sm:w-16 sm:h-12"
-        "Enter" -> "h-10 w-18 sm:h-12"
-        _ -> "h-10 w-8 sm:w-10 sm:h-12"
+        "Backspace" -> "h-10 w-6 sm:w-16 sm:h-14"
+        "Enter" -> "h-10 w-16 sm:h-14 sm:w-24"
+        _ -> "h-10 w-6 sm:w-10 sm:h-14"
       end
 
     ~H"""
