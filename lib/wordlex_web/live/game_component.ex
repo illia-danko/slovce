@@ -6,26 +6,65 @@ defmodule WordlexWeb.GameComponent do
     <div class="w-full">
       <div class="pr-2 pl-2 border-b border-gray-300">
         <div class="flex items-center justify-between overflow-hidden md:max-w-2xl md:mx-auto">
-
-          <h1 class="p-2 text-center text-xl text-gray-800 font-semibold uppercase tracking-widest dark:text-white md:text-3xl">Wordlex</h1>
+          <h1 class="p-2 text-center text-xl text-gray-800 font-semibold uppercase tracking-widest dark:text-white md:text-3xl">
+            Wordlex
+          </h1>
 
           <div class="mt-2">
             <button type="button">
               <span class="sr-only">Show help</span>
-              <svg class="w-6 h-6 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              <svg
+                class="w-6 h-6 dark:text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                >
+                </path>
               </svg>
             </button>
             <button type="button" phx-click={show_info_modal()}>
               <span class="sr-only">Show stats</span>
-              <svg class="w-6 h-6 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+              <svg
+                class="w-6 h-6 dark:text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                >
+                </path>
               </svg>
             </button>
             <button type="button" phx-click={show_settings_modal()}>
               <span class="sr-only">Show settings</span>
-              <svg class="w-6 h-6 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              <svg
+                class="w-6 h-6 dark:text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                >
+                </path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
+                </path>
               </svg>
             </button>
           </div>
@@ -67,13 +106,13 @@ defmodule WordlexWeb.GameComponent do
 
       <%= if not @game_over? do %>
         <div id="keyboard-input" phx-hook="KeyboardInput">
-          <.tile_row animate_class={if(@valid_guess?, do: "", else: "animate-shake")} >
-            <%= for index <- 0..4 do  %>
+          <.tile_row animate_class={if(@valid_guess?, do: "", else: "animate-shake")}>
+            <%= for index <- 0..4 do %>
               <.input_guess_tile index={index} />
             <% end %>
           </.tile_row>
         </div>
-      <% end  %>
+      <% end %>
 
       <.tile_rows guesses={empty_tiles} />
     </div>
@@ -82,9 +121,9 @@ defmodule WordlexWeb.GameComponent do
 
   defp tile_rows(assigns) do
     ~H"""
-    <%= for guess <- @guesses do  %>
+    <%= for guess <- @guesses do %>
       <.tile_row animate_class={"#{assigns[:animate_class] || ""}"}>
-        <%= for %{char: char, state: state} <- guess do  %>
+        <%= for %{char: char, state: state} <- guess do %>
           <.guess_tile char={char} state={state} />
         <% end %>
       </.tile_row>
@@ -173,7 +212,13 @@ defmodule WordlexWeb.GameComponent do
         "Backspace" ->
           ~H"""
           <svg class="h-8 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z"></path>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z"
+            >
+            </path>
           </svg>
           """
 
@@ -192,8 +237,10 @@ defmodule WordlexWeb.GameComponent do
 
     ~H"""
     <button
-      phx-click={JS.dispatch("keyboard:clicked", to: "#keyboard-input", detail: %{ key: @key })}
-      class={"#{size_classes} #{classes} p-2 rounded text-gray-700 text-md flex font-bold justify-center items-center uppercase focus:ring-2"}
+      phx-click={JS.dispatch("keyboard:clicked", to: "#keyboard-input", detail: %{key: @key})}
+      class={
+        "#{size_classes} #{classes} p-2 rounded text-gray-700 text-md flex font-bold justify-center items-center uppercase focus:ring-2"
+      }
     >
       <%= body %>
     </button>
@@ -246,10 +293,21 @@ defmodule WordlexWeb.GameComponent do
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
         <div class="mb-24 w-full inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:p-6 dark:bg-gray-800">
           <div class="absolute top-0 right-0 pt-4 pr-4">
-            <button type="button" phx-click={hide_modal(@modal_id)} class="bg-white rounded-md text-gray-600 hover:text-gray-800 dark:bg-gray-800 dark:text-white dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <button
+              type="button"
+              phx-click={hide_modal(@modal_id)}
+              class="bg-white rounded-md text-gray-600 hover:text-gray-800 dark:bg-gray-800 dark:text-white dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
               <span class="sr-only">Close</span>
               <!-- Heroicon name: outline/x -->
-              <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <svg
+                class="h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
@@ -281,12 +339,12 @@ defmodule WordlexWeb.GameComponent do
         </div>
         <h2 class="mt-2 text-gray-800 text-lg font-semibold uppercase dark:text-white">Guess distribution</h2>
         <%= if show_guess_dist? do %>
-          <.guess_distribution stats={@stats}/>
+          <.guess_distribution stats={@stats} />
         <% else %>
           <pre class="text-gray-700 text-sm dark:text-white">No Data</pre>
         <% end %>
         <%= if @show_countdown? do %>
-        <h2 class="mt-2 text-gray-800 text-lg font-semibold uppercase dark:text-white">Next word in</h2>
+          <h2 class="mt-2 text-gray-800 text-lg font-semibold uppercase dark:text-white">Next word in</h2>
           <.countdown />
         <% end %>
       </div>
@@ -300,14 +358,34 @@ defmodule WordlexWeb.GameComponent do
       <div class="space-y-4">
         <div class="pb-4 flex justify-between border-b border-gray-200 dark:border-gray-400">
           <p class="text-md text-gray-800 font-semibold dark:text-white">Enable Dark Theme</p>
-          <button phx-click="toggle_theme" type="button" class={"#{if(@checked?, do: "bg-green-600", else: "bg-gray-200")} relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"} role="switch" aria-checked="false">
+          <button
+            phx-click="toggle_theme"
+            type="button"
+            class={
+              "#{if(@checked?, do: "bg-green-600", else: "bg-gray-200")} relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            }
+            role="switch"
+            aria-checked="false"
+          >
             <span class="sr-only">Toggle theme</span>
-            <span aria-hidden="true" class={"#{if(@checked?, do: "translate-x-5", else: "translate-x-0")} pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"}></span>
+            <span
+              aria-hidden="true"
+              class={
+                "#{if(@checked?, do: "translate-x-5", else: "translate-x-0")} pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"
+              }
+            >
+            </span>
           </button>
         </div>
         <div class="pb-4 flex justify-between border-b border-gray-200 dark:border-gray-400">
           <p class="text-md text-gray-800 font-semibold dark:text-white">Source Code</p>
-          <a href="https://github.com/holandes22/wordlex" target="_blank" class="text-gray-400 border-b border-gray-400 dark:text-gray-300 dark:border-gray-300">wordlex</a>
+          <a
+            href="https://github.com/holandes22/wordlex"
+            target="_blank"
+            class="text-gray-400 border-b border-gray-400 dark:text-gray-300 dark:border-gray-300"
+          >
+            wordlex
+          </a>
         </div>
       </div>
     </.modal>
@@ -329,7 +407,11 @@ defmodule WordlexWeb.GameComponent do
       <%= for {key, value} <- @stats.guess_distribution do %>
         <div class="flex flex-row items-center justify-start space-x-2 font-mono">
           <div class="text-sm text-gray-700 dark:text-white"><%= key %></div>
-          <div class={"#{stat_bg_class(@stats, key)} font-semibold text-white text-medium text-right #{dist_bar_width(value)}"}><div class="ml-1 mr-1"><%= value %></div></div>
+          <div class={
+            "#{stat_bg_class(@stats, key)} font-semibold text-white text-medium text-right #{dist_bar_width(value)}"
+          }>
+            <div class="ml-1 mr-1"><%= value %></div>
+          </div>
         </div>
       <% end %>
     </div>
