@@ -66,6 +66,10 @@ defmodule WordlexWeb.GameLive do
 
           <div class="flex mt-14 sm:mt-28">
             <div class="flex flex-col items-center m-auto">
+              <%= if @message do %>
+                <div class="m-4 flex flex-col items-center"><.alert message={@message} /></div>
+              <% end %>
+
               <div class="">
                 <.grid
                   past_guesses={Enum.reverse(@game.guesses)}
