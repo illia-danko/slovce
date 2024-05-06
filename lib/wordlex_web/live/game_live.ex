@@ -161,12 +161,12 @@ defmodule WordlexWeb.GameLive do
   defp maybe_put_game_over_message(socket, %{} = game) do
     message =
       case GameEngine.guesses_left(game) do
-        0 -> "Phew!"
-        1 -> "Nice!"
-        2 -> "Superb!"
-        3 -> "Impressive!"
-        4 -> "Great!"
-        _ -> "Outstanding!"
+        0 -> "Зле!"
+        1 -> "Задовільно!"
+        2 -> "Нормально!"
+        3 -> "Чудово!"
+        4 -> "Вражаюче!"
+        _ -> "Видатно!"
       end
 
     put_message(socket, message)
