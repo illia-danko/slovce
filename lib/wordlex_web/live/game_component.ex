@@ -377,16 +377,6 @@ defmodule WordlexWeb.GameComponent do
             </span>
           </button>
         </div>
-        <div class="pb-4 flex justify-between border-b border-gray-200 dark:border-gray-400">
-          <p class="text-md text-gray-800 font-semibold dark:text-white">Source Code</p>
-          <a
-            href="https://github.com/holandes22/wordlex"
-            target="_blank"
-            class="text-gray-400 border-b border-gray-400 dark:text-gray-300 dark:border-gray-300"
-          >
-            wordlex
-          </a>
-        </div>
       </div>
     </.modal>
     """
