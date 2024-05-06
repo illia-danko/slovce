@@ -182,9 +182,9 @@ defmodule WordlexWeb.GameComponent do
     ]
 
     ~H"""
-    <div class="flex flex-col items-center space-y-1 md:space-y-2">
+    <div class="flex flex-col items-center gap-1">
       <%= for line <- lines do %>
-        <div class="flex items-center space-x-1 md:space-x-2">
+        <div class="flex items-center gap-1">
           <%= for key <- line do %>
             <.key letter_map={@letter_map} key={key} />
           <% end %>
