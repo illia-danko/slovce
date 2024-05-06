@@ -57,14 +57,14 @@ defmodule WordlexWeb.GameLive do
   def render(assigns) do
     ~H"""
     <div class={"#{if(@settings.theme == :dark, do: "dark", else: "")}"}>
-      <div class="dark:bg-gray-900">
+      <div class="dark:bg-gray-900 h-screen">
         <.info_modal stats={@stats} show_countdown?={@game.over?} open?={@show_info_modal?} />
         <.settings_modal checked?={@settings.theme == :dark} />
 
         <div id="game" phx-hook="Session" class="">
           <.header />
 
-          <div class="flex mt-14 sm:mt-0 sm:min-h-screen">
+          <div class="flex mt-14 sm:mt-28">
             <div class="flex flex-col items-center m-auto">
               <div class="">
                 <.grid
@@ -74,7 +74,7 @@ defmodule WordlexWeb.GameLive do
                   game_over?={@game.over?}
                 />
               </div>
-              <div class="mt-4 sm:mt-20">
+              <div class="mt-4 sm:mt-16">
                 <.keyboard letter_map={GameEngine.letter_map(@game)} />
               </div>
             </div>
