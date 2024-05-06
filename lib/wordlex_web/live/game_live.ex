@@ -64,7 +64,7 @@ defmodule WordlexWeb.GameLive do
         <div id="game" phx-hook="Session" class="">
           <.header />
 
-          <div class="flex mt-14 sm:mt-28">
+          <div class="flex mt-14 sm:mt-32">
             <div class="flex flex-col items-center m-auto">
               <%= if @message do %>
                 <div class="m-4 flex flex-col items-center"><.alert message={@message} /></div>
@@ -78,7 +78,7 @@ defmodule WordlexWeb.GameLive do
                   game_over?={@game.over?}
                 />
               </div>
-              <div class="mt-4 sm:mt-16">
+              <div class="mt-4">
                 <.keyboard letter_map={GameEngine.letter_map(@game)} />
               </div>
             </div>

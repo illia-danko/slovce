@@ -3,71 +3,69 @@ defmodule WordlexWeb.GameComponent do
 
   def header(assigns) do
     ~H"""
-    <div class="w-full">
-      <div class="pr-2 pl-2 border-b border-gray-300">
-        <div class="flex items-center justify-between overflow-hidden md:max-w-2xl md:mx-auto">
-          <h1 class="p-2 text-center text-xl text-gray-800 font-semibold uppercase tracking-widest dark:text-white md:text-3xl">
-            Вираз
-          </h1>
+    <div class="pr-2 pl-2 border-b border-gray-300">
+      <div class="flex items-center justify-between overflow-hidden max-w-xl mx-auto">
+        <h1 class="py-2 text-center text-xl text-gray-800 font-semibold uppercase tracking-widest dark:text-white md:text-3xl">
+          Вираз
+        </h1>
 
-          <div class="mt-2">
-            <button type="button">
-              <span class="sr-only">Show help</span>
-              <svg
-                class="w-6 h-6 dark:text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
+        <div class="mt-2">
+          <button type="button">
+            <span class="sr-only">Show help</span>
+            <svg
+              class="w-6 h-6 dark:text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                >
-                </path>
-              </svg>
-            </button>
-            <button type="button" phx-click={show_info_modal()}>
-              <span class="sr-only">Show stats</span>
-              <svg
-                class="w-6 h-6 dark:text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
+              </path>
+            </svg>
+          </button>
+          <button type="button" phx-click={show_info_modal()}>
+            <span class="sr-only">Show stats</span>
+            <svg
+              class="w-6 h-6 dark:text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                >
-                </path>
-              </svg>
-            </button>
-            <button type="button" phx-click={show_settings_modal()}>
-              <span class="sr-only">Show settings</span>
-              <svg
-                class="w-6 h-6 dark:text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
+              </path>
+            </svg>
+          </button>
+          <button type="button" phx-click={show_settings_modal()}>
+            <span class="sr-only">Show settings</span>
+            <svg
+              class="w-6 h-6 dark:text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                >
-                </path>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
-                </path>
-              </svg>
-            </button>
-          </div>
+              </path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
+              </path>
+            </svg>
+          </button>
         </div>
       </div>
     </div>
@@ -331,11 +329,11 @@ defmodule WordlexWeb.GameComponent do
     <.modal modal_id="info-modal" open?={@open?}>
       <div class="flex flex-col items-center space-y-4">
         <h2 class="text-gray-800 text-lg font-semibold uppercase dark:text-white">Статистика</h2>
-        <div class="flex items-center space-x-4">
-          <.stat value={played} label="Зіграно" />
-          <.stat value={win_percent} label="Виграно %" />
-          <.stat value="Н/Д" label="Поточна Смуга" />
-          <.stat value="Н/Д" label="Найбільша Смуга" />
+        <div class="flex items-start space-x-4 md:space-x-6">
+          <.stat value={played} label_first="Зіграно" label_second="" />
+          <.stat value={win_percent} label_first="Виграно" label_second="%" />
+          <.stat value="Н/Д" label_first="Поточна" label_second="Смуга" />
+          <.stat value="Н/Д" label_first="Найбільша" label_second="Смуга" />
         </div>
         <h2 class="mt-2 text-gray-800 text-lg font-semibold uppercase dark:text-white">Розподіл припущень</h2>
         <%= if show_guess_dist? do %>
@@ -386,7 +384,10 @@ defmodule WordlexWeb.GameComponent do
     ~H"""
     <div class="flex flex-col items-center space-y-2">
       <div class="text-gray-800 text-3xl font-semibold dark:text-white"><%= @value %></div>
-      <pre class="text-gray-700 text-xs break-words dark:text-gray-200"><%= @label %></pre>
+      <div class="flex flex-col items-center">
+        <pre class="text-gray-700 text-xs dark:text-gray-200"><%= @label_first %></pre>
+        <pre class="text-gray-700 text-xs dark:text-gray-200"><%= @label_second %></pre>
+      </div>
     </div>
     """
   end
