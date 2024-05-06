@@ -7,7 +7,7 @@ defmodule WordlexWeb.GameComponent do
       <div class="pr-2 pl-2 border-b border-gray-300">
         <div class="flex items-center justify-between overflow-hidden md:max-w-2xl md:mx-auto">
           <h1 class="p-2 text-center text-xl text-gray-800 font-semibold uppercase tracking-widest dark:text-white md:text-3xl">
-            Wordlex
+            Вираз
           </h1>
 
           <div class="mt-2">
@@ -330,21 +330,21 @@ defmodule WordlexWeb.GameComponent do
     ~H"""
     <.modal modal_id="info-modal" open?={@open?}>
       <div class="flex flex-col items-center space-y-4">
-        <h2 class="text-gray-800 text-lg font-semibold uppercase dark:text-white">Statistics</h2>
+        <h2 class="text-gray-800 text-lg font-semibold uppercase dark:text-white">Статистика</h2>
         <div class="flex items-center space-x-4">
-          <.stat value={played} label="Played" />
-          <.stat value={win_percent} label="Win %" />
-          <.stat value="N/A" label="Current Streak" />
-          <.stat value="N/A" label="Max Streak" />
+          <.stat value={played} label="Зіграно" />
+          <.stat value={win_percent} label="Виграно %" />
+          <.stat value="Н/Д" label="Поточна Смуга" />
+          <.stat value="Н/Д" label="Найбільша Смуга" />
         </div>
-        <h2 class="mt-2 text-gray-800 text-lg font-semibold uppercase dark:text-white">Guess distribution</h2>
+        <h2 class="mt-2 text-gray-800 text-lg font-semibold uppercase dark:text-white">Розподіл припущень</h2>
         <%= if show_guess_dist? do %>
           <.guess_distribution stats={@stats} />
         <% else %>
-          <pre class="text-gray-700 text-sm dark:text-white">No Data</pre>
+          <pre class="text-gray-700 text-sm dark:text-white">Відсутні Дані</pre>
         <% end %>
         <%= if @show_countdown? do %>
-          <h2 class="mt-2 text-gray-800 text-lg font-semibold uppercase dark:text-white">Next word in</h2>
+          <h2 class="mt-2 text-gray-800 text-lg font-semibold uppercase dark:text-white">Настпупне слово за</h2>
           <.countdown />
         <% end %>
       </div>
@@ -357,7 +357,7 @@ defmodule WordlexWeb.GameComponent do
     <.modal modal_id="settings-modal">
       <div class="space-y-4">
         <div class="pb-4 flex justify-between border-b border-gray-200 dark:border-gray-400">
-          <p class="text-md text-gray-800 font-semibold dark:text-white">Enable Dark Theme</p>
+          <p class="text-md text-gray-800 font-semibold dark:text-white">Застосувати Темну Тему</p>
           <button
             phx-click="toggle_theme"
             type="button"
