@@ -58,6 +58,7 @@ defmodule WordlexWeb.GameLive do
     ~H"""
     <div class={"#{if(@settings.theme == :dark, do: "dark", else: "")}"}>
       <div class="dark:bg-gray-900">
+        <.help_modal />
         <.info_modal stats={@stats} show_countdown?={@game.over?} open?={@show_info_modal?} />
         <.settings_modal checked?={@settings.theme == :dark} />
 

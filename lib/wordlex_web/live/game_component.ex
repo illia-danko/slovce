@@ -10,7 +10,7 @@ defmodule WordlexWeb.GameComponent do
         </h1>
 
         <div class="mt-2">
-          <button type="button">
+          <button type="button" phx-click={show_help_modal()}>
             <span class="sr-only">Show help</span>
             <svg
               class="w-6 h-6 dark:text-white"
@@ -245,21 +245,9 @@ defmodule WordlexWeb.GameComponent do
     """
   end
 
-  def show_info_modal() do
-    show_modal("info-modal")
-  end
-
-  def hide_info_modal() do
-    hide_modal("info-modal")
-  end
-
-  def show_settings_modal() do
-    show_modal("settings-modal")
-  end
-
-  def hide_settings_modal() do
-    hide_modal("settings-modal")
-  end
+  def show_info_modal(), do: show_modal("info-modal")
+  def show_settings_modal(), do: show_modal("settings-modal")
+  def show_help_modal(), do: show_modal("help-modal")
 
   def show_modal(id) do
     JS.show(%JS{},
@@ -314,6 +302,90 @@ defmodule WordlexWeb.GameComponent do
         </div>
       </div>
     </div>
+    """
+  end
+
+  def help_modal(assigns) do
+    ~H"""
+    <.modal modal_id="help-modal">
+      <div class="text-sm">
+        <h2 class="text-xl font-bold text-center">Як грати</h2>
+        <h1 class="text-lg font-medium mt-6">Відгадати Слівце з 6 спроб.</h1>
+        <ul class="list-disc list-inside mt-2">
+          <li>Кожна спроба повинна буди справжнім словом з <strong>5</strong> літер.</li>
+          <li class="mt-2">Колір клітинки змінюється і відображає як близько ви до розв'язання слова.</li>
+        </ul>
+        <div class="mt-6">
+          <p1 class="text-lg font-medium">Приклади:</p1>
+        </div>
+        <div class="mt-2 flex gap-1 items-center font-bold">
+          <div class="w-6 h-6 flex items-center justify-center text-gray-100 bg-green-500">
+            <div>О</div>
+          </div>
+          <div class="w-6 h-6 flex items-center justify-center border-2 border-gray-500">
+            <div>С</div>
+          </div>
+          <div class="w-6 h-6 flex items-center justify-center border-2 border-gray-500">
+            <div>І</div>
+          </div>
+          <div class="w-6 h-6 flex items-center justify-center border-2 border-gray-500">
+            <div>Н</div>
+          </div>
+          <div class="w-6 h-6 flex items-center justify-center border-2 border-gray-500">
+            <div>Ь</div>
+          </div>
+        </div>
+        <div class="mt-2">
+          <p1><strong>О</strong> в цьому Cлівці та знаходиться на правильній позиції.</p1>
+        </div>
+
+        <div class="mt-4 flex gap-1 items-center font-bold">
+          <div class="w-6 h-6 flex items-center justify-center border-2 border-gray-500">
+            <div>Д</div>
+          </div>
+          <div class="w-6 h-6 flex items-center justify-center text-gray-100 bg-yellow-500">
+            <div>У</div>
+          </div>
+          <div class="w-6 h-6 flex items-center justify-center border-2 border-gray-500">
+            <div>Ж</div>
+          </div>
+          <div class="w-6 h-6 flex items-center justify-center border-2 border-gray-500">
+            <div>И</div>
+          </div>
+          <div class="w-6 h-6 flex items-center justify-center border-2 border-gray-500">
+            <div>Й</div>
+          </div>
+        </div>
+        <div class="mt-2">
+          <p1><strong>У</strong> є в цьому Cлівці, але знаходиться на іншій позиції.</p1>
+        </div>
+
+        <div class="mt-4 flex gap-1 items-center font-bold">
+          <div class="w-6 h-6 flex items-center justify-center border-2 border-gray-500">
+            <div>Б</div>
+          </div>
+          <div class="w-6 h-6 flex items-center justify-center border-2 border-gray-500">
+            <div>І</div>
+          </div>
+          <div class="w-6 h-6 flex items-center justify-center border-2 border-gray-500">
+            <div>Г</div>
+          </div>
+          <div class="w-6 h-6 flex items-center justify-center text-gray-100 bg-gray-500">
+            <div>Т</div>
+          </div>
+          <div class="w-6 h-6 flex items-center justify-center border-2 border-gray-500">
+            <div>И</div>
+          </div>
+        </div>
+        <div class="mt-2">
+          <p1><strong>Т</strong> немає в цьому Cлівці ні на якій позиції.</p1>
+        </div>
+
+        <div class="mt-6">
+          <p1>Кожен день з'являється <strong>3</strong> нових слова.</p1>
+        </div>
+      </div>
+    </.modal>
     """
   end
 
