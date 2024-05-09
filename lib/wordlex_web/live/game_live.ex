@@ -109,7 +109,7 @@ defmodule WordlexWeb.GameLive do
   @impl true
   def handle_event("submit", %{"guess" => guess}, socket)
       when byte_size(guess) < 5 do
-    {:noreply, socket |> put_message("Not enough letters") |> assign(valid_guess?: false)}
+    {:noreply, socket |> put_message("Не достатньо літер") |> assign(valid_guess?: false)}
   end
 
   @impl true
@@ -126,7 +126,7 @@ defmodule WordlexWeb.GameLive do
        |> store_session()
        |> push_event("keyboard:reset", %{})}
     else
-      {:noreply, socket |> put_message("Not in word list") |> assign(valid_guess?: false)}
+      {:noreply, socket |> put_message("Не знайдено в словнику") |> assign(valid_guess?: false)}
     end
   end
 
