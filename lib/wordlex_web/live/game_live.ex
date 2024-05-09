@@ -65,23 +65,26 @@ defmodule WordlexWeb.GameLive do
         <div id="game" phx-hook="Session" class="flex flex-col justify-between h-screen">
           <.header />
 
-          <div class="flex flex-col items-center">
-            <%= if @message do %>
-              <div class="m-2 flex flex-col items-center"><.alert message={@message} /></div>
-            <% end %>
+          <div>
+            <div class="flex flex-col items-center">
+              <%= if @message do %>
+                <div class="m-2 flex flex-col items-center"><.alert message={@message} /></div>
+              <% end %>
 
-            <div class="">
-              <.grid
-                past_guesses={Enum.reverse(@game.guesses)}
-                valid_guess?={@valid_guess?}
-                revealing?={length(@game.guesses) > 0 && @revealing?}
-                game_over?={@game.over?}
-              />
+              <div class="">
+                <.grid
+                  past_guesses={Enum.reverse(@game.guesses)}
+                  valid_guess?={@valid_guess?}
+                  revealing?={length(@game.guesses) > 0 && @revealing?}
+                  game_over?={@game.over?}
+                />
+              </div>
+            </div>
+            <div class="mx-2 my-8 sm:mx-4 sm:my-12">
+              <.keyboard letter_map={GameEngine.letter_map(@game)} />
             </div>
           </div>
-          <div class="m-2 sm:m-4">
-            <.keyboard letter_map={GameEngine.letter_map(@game)} />
-          </div>
+          <div></div>
         </div>
       </div>
     </div>
