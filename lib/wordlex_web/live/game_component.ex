@@ -3,7 +3,7 @@ defmodule WordlexWeb.GameComponent do
 
   def header(assigns) do
     ~H"""
-    <div class="pr-2 pl-2 border-b border-gray-300">
+    <div class="px-2 sm:px-4 border-b border-gray-300">
       <div class="flex items-center justify-between overflow-hidden max-w-xl mx-auto">
         <h1 class="py-2 text-center text-xl text-gray-800 font-semibold uppercase tracking-widest dark:text-white md:text-3xl">
           Вираз
