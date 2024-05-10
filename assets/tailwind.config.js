@@ -30,6 +30,9 @@ module.exports = {
         shake: "shake 0.5s ease-in-out",
         flip: "flip 0.8s ease-in-out",
       },
+      fontFamily: {
+        "old-standard": ["Old Standard TT", "ui-serif", "Georgia", "Cambria", "Times New Roman", "Times", "serif"],
+      },
     },
   },
   plugins: [require("@tailwindcss/forms")],
