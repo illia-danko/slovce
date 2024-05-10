@@ -308,7 +308,7 @@ defmodule WordlexWeb.GameComponent do
   def help_modal(assigns) do
     ~H"""
     <.modal modal_id="help-modal">
-      <div class="text-sm">
+      <div class="text-sm text-gray-800 dark:text-white">
         <h2 class="text-xl font-bold text-center">Як грати</h2>
         <h1 class="text-lg font-medium mt-6">Відгадати Слівце з 6 спроб.</h1>
         <ul class="list-disc list-inside mt-2 leading-loose">
