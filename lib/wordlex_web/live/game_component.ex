@@ -175,7 +175,7 @@ defmodule WordlexWeb.GameComponent do
   def keyboard(assigns) do
     lines = [
       ~w(Й Ц У К Е Н Г Ґ Ш Щ З Х Ї),
-      ~w(Ф І В А П Р О Л Д Ж Є `),
+      ~w(Ф І В А П Р О Л Д Ж Є '),
       ~w(Enter Я Ч С М И Т Ь Б Ю Backspace)
     ]
 

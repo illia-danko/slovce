@@ -59,7 +59,7 @@ export default {
           case "Ь":
           case "Б":
           case "Ю":
-          case "`":
+          case "'":
             this.onChar(key);
         }
       }
