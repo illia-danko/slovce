@@ -13,7 +13,7 @@ defmodule WordlexWeb.GameComponent do
           <button type="button" phx-click={show_help_modal()}>
             <span class="sr-only">Show help</span>
             <svg
-              class="w-6 h-6 dark:text-white"
+              class="w-6 h-6 md:w-8 md:h-8 dark:text-white"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -31,7 +31,7 @@ defmodule WordlexWeb.GameComponent do
           <button type="button" phx-click={show_info_modal()}>
             <span class="sr-only">Show stats</span>
             <svg
-              class="w-6 h-6 dark:text-white"
+              class="w-6 h-6 md:w-8 md:h-8 dark:text-white"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -49,7 +49,7 @@ defmodule WordlexWeb.GameComponent do
           <button type="button" phx-click={show_settings_modal()}>
             <span class="sr-only">Show settings</span>
             <svg
-              class="w-6 h-6 dark:text-white"
+              class="w-6 h-6 md:w-8 md:h-8 dark:text-white"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -209,14 +209,12 @@ defmodule WordlexWeb.GameComponent do
       case key do
         "Backspace" ->
           ~H"""
-          <svg class="h-8 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <svg fill="none" class="h-6 w-6" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z"
-            >
-            </path>
+              d="M12 9.75 14.25 12m0 0 2.25 2.25M14.25 12l2.25-2.25M14.25 12 12 14.25m-2.58 4.92-6.374-6.375a1.125 1.125 0 0 1 0-1.59L9.42 4.83c.21-.211.497-.33.795-.33H19.5a2.25 2.25 0 0 1 2.25 2.25v10.5a2.25 2.25 0 0 1-2.25 2.25h-9.284c-.298 0-.585-.119-.795-.33Z"
+            />
           </svg>
           """
 
@@ -228,7 +226,7 @@ defmodule WordlexWeb.GameComponent do
 
     size_classes =
       case key do
-        "Backspace" -> "h-10 w-6 sm:w-16 sm:h-14"
+        "Backspace" -> "h-10 w-10 sm:w-14 sm:h-14"
         "Enter" -> "h-10 w-16 sm:h-14 sm:w-24"
         _ -> "h-10 w-6 sm:w-10 sm:h-14"
       end
