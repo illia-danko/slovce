@@ -158,7 +158,7 @@ defmodule WordlexWeb.GameLive do
   defp maybe_put_game_over_message(socket, %{over?: false}), do: socket
 
   defp maybe_put_game_over_message(socket, %{result: :lost, word: word}),
-    do: put_message(socket, "The solution was #{word}")
+    do: put_message(socket, "Слово було #{word}")
 
   defp maybe_put_game_over_message(socket, %{} = game) do
     message =
