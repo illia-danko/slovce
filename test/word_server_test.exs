@@ -1,6 +1,6 @@
 defmodule WordServerTest do
   use ExUnit.Case
-  alias Wordlex.WordServer
+  alias Slivce.WordServer
 
   @words ["tuple", "crane", "claim"]
   @params [

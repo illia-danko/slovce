@@ -20,12 +20,22 @@ lint:
 live:
 	$(gdk_backend) iex -S mix phx.server
 
-database_init:
-	mix ecto.create
-	mix ecto.migrate
-	mix run priv/repo/seeds.exs # populate with data
+deploy:
+	@ssh root@slivce.net -t 'rm -rf /var/server/slivce || true'
+	@rsync -vrP --delete-after \
+		lib \
+		priv \
+		assets \
+		.formatter.exs \
+		mix.exs \
+		mix.lock root@slivce.net:/var/server/slivce
+	@ssh root@slivce.net -t 'mkdir -p /var/server/slivce/config'
+	@rsync -vrP --delete-after \
+		config/config.exs \
+		config/runtime.exs \
+		config/prod.exs root@slivce.net:/var/server/slivce/config
+	@rsync -vrP --delete-after build.sh root@slivce.net:/var/server/slivce
+	@ssh root@slivce.net -t 'bash /var/server/slivce/build.sh compile'
+	@ssh root@slivce.net -t 'systemctl restart slivce.service'
 
-database_drop:
-	mix ecto.drop --force-drop --no-compile
-
-.PHONY: deps build format test lint live database_init database_drop
+.PHONY: deps build format test lint live deploy

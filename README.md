@@ -1,6 +1,6 @@
-# Wordlex
+# Slivce
 
-Just another Wordle clone written in Elixir that uses Phoenix LiveView for the web app. Visit at [wordlex.fly.dev](https://wordlex.fly.dev/)
+Just another Wordle clone written in Elixir that uses Phoenix LiveView for the web app. Visit at [slivce.fly.dev](https://slivce.fly.dev/)
 
 To start the server:
 

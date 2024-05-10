@@ -1,6 +1,6 @@
 defmodule GameEngineTest do
   use ExUnit.Case
-  alias Wordlex.GameEngine
+  alias Slivce.GameEngine
 
   describe "letter map" do
     test "letter_map distribution" do

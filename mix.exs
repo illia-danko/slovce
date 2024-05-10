@@ -1,9 +1,9 @@
-defmodule Wordlex.MixProject do
+defmodule Slivce.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :wordlex,
+      app: :slivce,
       version: "0.1.0",
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -18,7 +18,7 @@ defmodule Wordlex.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Wordlex.Application, []},
+      mod: {Slivce.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end

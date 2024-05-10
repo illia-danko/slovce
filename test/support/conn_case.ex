@@ -1,4 +1,4 @@
-defmodule WordlexWeb.ConnCase do
+defmodule SlivceWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -11,7 +11,7 @@ defmodule WordlexWeb.ConnCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use WordlexWeb.ConnCase, async: true`, although
+  by setting `use SlivceWeb.ConnCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -22,12 +22,12 @@ defmodule WordlexWeb.ConnCase do
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
-      import WordlexWeb.ConnCase
+      import SlivceWeb.ConnCase
 
-      alias WordlexWeb.Router.Helpers, as: Routes
+      alias SlivceWeb.Router.Helpers, as: Routes
 
       # The default endpoint for testing
-      @endpoint WordlexWeb.Endpoint
+      @endpoint SlivceWeb.Endpoint
     end
   end
 

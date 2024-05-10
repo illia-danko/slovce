@@ -8,10 +8,10 @@
 import Config
 
 # Configures the endpoint
-config :wordlex, WordlexWeb.Endpoint,
+config :slivce, SlivceWeb.Endpoint,
   url: [host: "localhost"],
-  render_errors: [view: WordlexWeb.ErrorView, accepts: ~w(html json), layout: false],
-  pubsub_server: Wordlex.PubSub,
+  render_errors: [view: SlivceWeb.ErrorView, accepts: ~w(html json), layout: false],
+  pubsub_server: Slivce.PubSub,
   live_view: [signing_salt: "khnfZ1vv"]
 
 # Configures the mailer
@@ -21,7 +21,7 @@ config :wordlex, WordlexWeb.Endpoint,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :wordlex, Wordlex.Mailer, adapter: Swoosh.Adapters.Local
+config :slivce, Slivce.Mailer, adapter: Swoosh.Adapters.Local
 
 # Swoosh API client is needed for adapters other than SMTP.
 config :swoosh, :api_client, false
