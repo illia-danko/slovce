@@ -351,7 +351,7 @@ defmodule WordlexWeb.GameComponent do
         </.help_modal_example>
 
         <div class="mt-6">
-          <p1>Кожен день з'являється <strong>3</strong> нових слова.</p1>
+          <p1>Кожен день з'являється <strong>1</strong> нове слово.</p1>
         </div>
       </div>
     </.modal>
