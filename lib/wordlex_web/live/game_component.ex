@@ -311,81 +311,73 @@ defmodule WordlexWeb.GameComponent do
       <div class="text-sm">
         <h2 class="text-xl font-bold text-center">Як грати</h2>
         <h1 class="text-lg font-medium mt-6">Відгадати Слівце з 6 спроб.</h1>
-        <ul class="list-disc list-inside mt-2">
+        <ul class="list-disc list-inside mt-2 leading-loose">
           <li>Кожна спроба повинна буди справжнім словом з <strong>5</strong> літер.</li>
-          <li class="mt-2">Колір клітинки змінюється і відображає як близько ви до розв'язання слова.</li>
+          <li>Колір клітинки змінюється і відображає як близько ви до розв'язання слова.</li>
         </ul>
         <div class="mt-6">
           <p1 class="text-lg font-medium">Приклади:</p1>
         </div>
-        <div class="mt-2 flex gap-1 items-center font-bold">
-          <div class="w-6 h-6 flex items-center justify-center text-gray-100 bg-green-500">
-            <div>О</div>
-          </div>
-          <div class="w-6 h-6 flex items-center justify-center border-2 border-gray-500">
-            <div>С</div>
-          </div>
-          <div class="w-6 h-6 flex items-center justify-center border-2 border-gray-500">
-            <div>І</div>
-          </div>
-          <div class="w-6 h-6 flex items-center justify-center border-2 border-gray-500">
-            <div>Н</div>
-          </div>
-          <div class="w-6 h-6 flex items-center justify-center border-2 border-gray-500">
-            <div>Ь</div>
-          </div>
-        </div>
-        <div class="mt-2">
-          <p1><strong>О</strong> в цьому Cлівці та знаходиться на правильній позиції.</p1>
-        </div>
 
-        <div class="mt-4 flex gap-1 items-center font-bold">
-          <div class="w-6 h-6 flex items-center justify-center border-2 border-gray-500">
-            <div>Д</div>
-          </div>
-          <div class="w-6 h-6 flex items-center justify-center text-gray-100 bg-yellow-500">
-            <div>У</div>
-          </div>
-          <div class="w-6 h-6 flex items-center justify-center border-2 border-gray-500">
-            <div>Ж</div>
-          </div>
-          <div class="w-6 h-6 flex items-center justify-center border-2 border-gray-500">
-            <div>И</div>
-          </div>
-          <div class="w-6 h-6 flex items-center justify-center border-2 border-gray-500">
-            <div>Й</div>
-          </div>
-        </div>
-        <div class="mt-2">
-          <p1><strong>У</strong> є в цьому Cлівці, але знаходиться на іншій позиції.</p1>
-        </div>
+        <% extra_classes = [
+          "text-gray-100 bg-green-500",
+          "border-2 border-gray-500",
+          "border-2 border-gray-500",
+          "border-2 border-gray-500",
+          "border-2 border-gray-500"
+        ] %>
+        <.help_modal_example word="осінь" extra_classes={extra_classes}>
+          <strong>О</strong> в цьому Cлівці та знаходиться на правильній позиції.
+        </.help_modal_example>
 
-        <div class="mt-4 flex gap-1 items-center font-bold">
-          <div class="w-6 h-6 flex items-center justify-center border-2 border-gray-500">
-            <div>Б</div>
-          </div>
-          <div class="w-6 h-6 flex items-center justify-center border-2 border-gray-500">
-            <div>І</div>
-          </div>
-          <div class="w-6 h-6 flex items-center justify-center border-2 border-gray-500">
-            <div>Г</div>
-          </div>
-          <div class="w-6 h-6 flex items-center justify-center text-gray-100 bg-gray-500">
-            <div>Т</div>
-          </div>
-          <div class="w-6 h-6 flex items-center justify-center border-2 border-gray-500">
-            <div>И</div>
-          </div>
-        </div>
-        <div class="mt-2">
-          <p1><strong>Т</strong> немає в цьому Cлівці ні на якій позиції.</p1>
-        </div>
+        <% extra_classes = [
+          "border-2 border-gray-500",
+          "text-gray-100 bg-yellow-500",
+          "border-2 border-gray-500",
+          "border-2 border-gray-500",
+          "border-2 border-gray-500"
+        ] %>
+        <.help_modal_example word="дужий" extra_classes={extra_classes}>
+          <strong>У</strong> є в цьому Cлівці, але знаходиться на іншій позиції.
+        </.help_modal_example>
+
+        <% extra_classes = [
+          "border-2 border-gray-500",
+          "border-2 border-gray-500",
+          "border-2 border-gray-500",
+          "text-gray-100 bg-gray-500",
+          "border-2 border-gray-500"
+        ] %>
+        <.help_modal_example word="бігти" extra_classes={extra_classes}>
+          <strong>Т</strong> немає в цьому Cлівці ні на якій позиції.
+        </.help_modal_example>
 
         <div class="mt-6">
           <p1>Кожен день з'являється <strong>3</strong> нових слова.</p1>
         </div>
       </div>
     </.modal>
+    """
+  end
+
+  def help_modal_example(assigns) do
+    examples =
+      assigns.word
+      |> String.upcase()
+      |> String.graphemes()
+      |> Enum.zip(assigns.extra_classes)
+
+    ~H"""
+    <div class="mt-2 flex gap-1 items-center font-bold">
+      <%= for {char, extra_classes} <- examples  do %>
+        <div class={"w-6 h-6 flex items-center justify-center #{extra_classes}"}>
+          <div><%= char %></div>
+        </div>
+      <% end %>
+    </div>
+    <div class="mt-2">
+      <p1><%= render_slot(@inner_block) %></p1>
+    </div>
     """
   end
 
