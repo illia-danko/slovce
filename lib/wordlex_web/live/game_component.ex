@@ -5,7 +5,7 @@ defmodule WordlexWeb.GameComponent do
     ~H"""
     <div class="px-2 sm:px-4 border-b border-gray-300">
       <div class="flex items-center justify-between overflow-hidden max-w-xl mx-auto">
-        <h1 class="py-2 text-center text-xl text-gray-800 italic tracking-tight font-old-standard font-semibold dark:text-white md:text-3xl">
+        <h1 class="py-2 text-center text-2xl text-gray-800 tracking-tight font-old-standard font-bold dark:text-white md:text-3xl">
           Слівце
         </h1>
 
