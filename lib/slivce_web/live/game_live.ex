@@ -80,14 +80,13 @@ defmodule SlivceWeb.GameLive do
               <.keyboard letter_map={GameEngine.letter_map(@game)} />
             </div>
           </div>
-          <footer class="m-2 sm:m-4 text-center text-xs font-medium tracking-wide">
+          <footer class="m-2 sm:m-4 text-center text-xs font-medium tracking-wide dark:text-white">
             <h3>
               Розроблено <a href="https://github.com/holandes22"><strong>Pablo Klijnjan</strong></a>
               та <a href="https://github.com/illia-danko"><strong>Иллєю Данько</strong></a>
             </h3>
             <h3>
-              Ідея -
-              <a href="https://en.wikipedia.org/wiki/Josh_Wardle"><strong>Josh Wardle</strong></a>
+              Ідея - <a href="https://en.wikipedia.org/wiki/Josh_Wardle"><strong>Josh Wardle</strong></a>
             </h3>
           </footer>
         </div>
