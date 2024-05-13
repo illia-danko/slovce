@@ -81,7 +81,7 @@ defmodule SlivceWeb.GameLive do
             </div>
           </div>
 
-          <.footer />
+          <.site_footer />
         </div>
       </div>
     </div>

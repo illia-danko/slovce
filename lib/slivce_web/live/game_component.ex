@@ -528,7 +528,7 @@ defmodule SlivceWeb.GameComponent do
   defp dist_bar_width(15), do: "w-[15rem]"
   defp dist_bar_width(_key), do: "w-full"
 
-  def footer(assigns) do
+  def site_footer(assigns) do
     ~H"""
     <div class="m-2 sm:m-4 text-center text-xs font-medium tracking-wide dark:text-white">
       <h3>
