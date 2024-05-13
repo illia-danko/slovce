@@ -62,12 +62,7 @@ defmodule SlivceWeb.GameComponent do
                 d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
               >
               </path>
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-              >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
               </path>
             </svg>
           </button>
@@ -145,10 +140,7 @@ defmodule SlivceWeb.GameComponent do
 
   def tile(assigns) do
     ~H"""
-    <div
-      id={@id}
-      class={"w-14 h-14 flex justify-center items-center #{@extra_classes} sm:w-16 sm:h-16"}
-    >
+    <div id={@id} class={"w-14 h-14 flex justify-center items-center #{@extra_classes} sm:w-16 sm:h-16"}>
       <div class="text-3xl uppercase font-bold"><%= @char %></div>
     </div>
     """
@@ -289,8 +281,7 @@ defmodule SlivceWeb.GameComponent do
     ~H"""
     <div id={@modal_id} class={@class} aria-labelledby="modal-title" role="dialog" aria-modal="true">
       <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true">
-        </div>
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
         <!-- This element is to trick the browser into centering the modal contents. -->
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
           &#8203;
@@ -312,12 +303,7 @@ defmodule SlivceWeb.GameComponent do
                 stroke="currentColor"
                 aria-hidden="true"
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
@@ -541,4 +527,18 @@ defmodule SlivceWeb.GameComponent do
   defp dist_bar_width(14), do: "w-[14rem]"
   defp dist_bar_width(15), do: "w-[15rem]"
   defp dist_bar_width(_key), do: "w-full"
+
+  def footer(assigns) do
+    ~H"""
+    <div class="m-2 sm:m-4 text-center text-xs font-medium tracking-wide dark:text-white">
+      <h3>
+        Розроблено <a href="https://github.com/holandes22"><strong>Pablo Klijnjan</strong></a>
+        та <a href="https://github.com/illia-danko"><strong>Иллєю Данько</strong></a>
+      </h3>
+      <h3>
+        Ідея - <a href="https://en.wikipedia.org/wiki/Josh_Wardle"><strong>Josh Wardle</strong></a>
+      </h3>
+    </div>
+    """
+  end
 end
