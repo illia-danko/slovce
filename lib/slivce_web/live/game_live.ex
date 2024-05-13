@@ -114,7 +114,7 @@ defmodule SlivceWeb.GameLive do
 
   @impl true
   def handle_event("submit", %{"guess" => guess}, socket)
-      when byte_size(guess) < 5 do
+      when byte_size(guess) < 10 do
     {:noreply, socket |> put_message("Не достатньо літер") |> assign(valid_guess?: false)}
   end
 
