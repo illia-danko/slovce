@@ -116,7 +116,7 @@ defmodule SlivceWeb.GameLive do
   def handle_event("submit", %{"guess" => guess}, socket) do
     case guess |> String.graphemes() |> length() do
       n when n < 5 ->
-        {:noreply, socket |> put_message("Не достатньо літер") |> assign(valid_guess?: false)}
+        {:noreply, socket |> put_message("Недостатньо літер") |> assign(valid_guess?: false)}
 
       _ ->
         if WordServer.valid_guess?(guess) do
