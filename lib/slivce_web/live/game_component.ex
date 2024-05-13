@@ -1,7 +1,7 @@
 defmodule SlivceWeb.GameComponent do
-  use SlivceWeb, :component
+  use SlivceWeb, :html
 
-  def header(assigns) do
+  def site_header(assigns) do
     ~H"""
     <div class="px-2 sm:px-4 border-b border-gray-300">
       <div class="flex items-center justify-between overflow-hidden max-w-xl mx-auto">
@@ -62,7 +62,12 @@ defmodule SlivceWeb.GameComponent do
                 d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
               >
               </path>
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+              >
               </path>
             </svg>
           </button>
@@ -92,6 +97,7 @@ defmodule SlivceWeb.GameComponent do
 
     count = max(6 - length(assigns.past_guesses) - offsset, 0)
     empty_tiles = List.duplicate(%{char: "", state: :empty}, 5) |> List.duplicate(count)
+    assigns = assign(assigns, :empty_tiles, empty_tiles)
 
     ~H"""
     <div class="grid grid-rows-6 gap-1">
@@ -112,7 +118,7 @@ defmodule SlivceWeb.GameComponent do
         </div>
       <% end %>
 
-      <.tile_rows guesses={empty_tiles} />
+      <.tile_rows guesses={@empty_tiles} />
     </div>
     """
   end
@@ -139,7 +145,10 @@ defmodule SlivceWeb.GameComponent do
 
   def tile(assigns) do
     ~H"""
-    <div id={@id} class={"w-14 h-14 flex justify-center items-center #{@extra_classes} sm:w-16 sm:h-16"}>
+    <div
+      id={@id}
+      class={"w-14 h-14 flex justify-center items-center #{@extra_classes} sm:w-16 sm:h-16"}
+    >
       <div class="text-3xl uppercase font-bold"><%= @char %></div>
     </div>
     """
@@ -161,8 +170,10 @@ defmodule SlivceWeb.GameComponent do
           "text-white bg-gray-500"
       end
 
+    assigns = assign(assigns, :extra_classes, extra_classes)
+
     ~H"""
-    <.tile char={@char} id={nil} extra_classes={extra_classes} />
+    <.tile char={@char} id={nil} extra_classes={@extra_classes} />
     """
   end
 
@@ -179,9 +190,11 @@ defmodule SlivceWeb.GameComponent do
       ~w(Enter Я Ч С М И Т Ь Б Ю Backspace)
     ]
 
+    assigns = assign(assigns, :lines, lines)
+
     ~H"""
     <div class="flex flex-col items-center gap-1">
-      <%= for line <- lines do %>
+      <%= for line <- @lines do %>
         <div class="flex items-center gap-1">
           <%= for key <- line do %>
             <.key letter_map={@letter_map} key={key} />
@@ -231,37 +244,39 @@ defmodule SlivceWeb.GameComponent do
         _ -> "h-10 w-6 sm:w-10 sm:h-14"
       end
 
+    assigns = assign(assigns, size_classes: size_classes, body: body, classes: classes)
+
     ~H"""
     <button
       phx-click={JS.dispatch("keyboard:clicked", to: "#keyboard-input", detail: %{key: @key})}
       class={
-        "#{size_classes} #{classes} p-2 rounded text-gray-700 text-md flex font-bold justify-center items-center uppercase focus:ring-2"
+        "#{@size_classes} #{@classes} p-2 rounded text-gray-700 text-md flex font-bold justify-center items-center uppercase focus:ring-2"
       }
     >
-      <%= body %>
+      <%= @body %>
     </button>
     """
   end
 
-  def show_info_modal(), do: show_modal("info-modal")
-  def show_settings_modal(), do: show_modal("settings-modal")
-  def show_help_modal(), do: show_modal("help-modal")
+  def show_info_modal(), do: show_modal_menu("info-modal")
+  def show_settings_modal(), do: show_modal_menu("settings-modal")
+  def show_help_modal(), do: show_modal_menu("help-modal")
 
-  def show_modal(id) do
+  def show_modal_menu(id) do
     JS.show(%JS{},
       transition: {"ease-out duration-300", "opacity-0", "opacity-100"},
       to: "##{id}"
     )
   end
 
-  def hide_modal(id) do
+  def hide_modal_menu(id) do
     JS.hide(%JS{},
       transition: {"ease-in duration-200", "opacity-100", "opacity-0"},
       to: "##{id}"
     )
   end
 
-  def modal(assigns) do
+  def modal_menu(assigns) do
     class =
       if Map.get(assigns, :open?, false) do
         "fixed z-10 inset-0 overflow-y-auto"
@@ -269,17 +284,22 @@ defmodule SlivceWeb.GameComponent do
         "fixed z-10 inset-0 overflow-y-auto hidden"
       end
 
+    assigns = assign(assigns, class: class)
+
     ~H"""
-    <div id={@modal_id} class={class} aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div id={@modal_id} class={@class} aria-labelledby="modal-title" role="dialog" aria-modal="true">
       <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true">
+        </div>
         <!-- This element is to trick the browser into centering the modal contents. -->
-        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
+          &#8203;
+        </span>
         <div class="mb-24 w-full inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:p-6 dark:bg-gray-800">
           <div class="absolute top-0 right-0 pt-4 pr-4">
             <button
               type="button"
-              phx-click={hide_modal(@modal_id)}
+              phx-click={hide_modal_menu(@modal_id)}
               class="bg-white rounded-md text-gray-600 hover:text-gray-800 dark:bg-gray-800 dark:text-white dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               <span class="sr-only">Close</span>
@@ -292,7 +312,12 @@ defmodule SlivceWeb.GameComponent do
                 stroke="currentColor"
                 aria-hidden="true"
               >
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </button>
           </div>
@@ -305,7 +330,7 @@ defmodule SlivceWeb.GameComponent do
 
   def help_modal(assigns) do
     ~H"""
-    <.modal modal_id="help-modal" open?={@open?}>
+    <.modal_menu modal_id="help-modal" open?={@open?}>
       <div class="text-sm text-gray-800 dark:text-white">
         <h2 class="text-xl font-bold text-center">Як грати</h2>
         <h1 class="text-lg font-medium mt-6">Відгадати Слівце з 6 спроб.</h1>
@@ -354,7 +379,7 @@ defmodule SlivceWeb.GameComponent do
           <p1>Кожен день з'являється <strong>1</strong> нове слово.</p1>
         </div>
       </div>
-    </.modal>
+    </.modal_menu>
     """
   end
 
@@ -365,9 +390,11 @@ defmodule SlivceWeb.GameComponent do
       |> String.graphemes()
       |> Enum.zip(assigns.extra_classes)
 
+    assigns = assign(assigns, examples: examples)
+
     ~H"""
     <div class="mt-2 flex gap-1 items-center font-bold">
-      <%= for {char, extra_classes} <- examples  do %>
+      <%= for {char, extra_classes} <- @examples  do %>
         <div class={"w-6 h-6 flex items-center justify-center #{extra_classes}"}>
           <div><%= char %></div>
         </div>
@@ -387,34 +414,46 @@ defmodule SlivceWeb.GameComponent do
     show_guess_dist? = played > 0
     win_percent = floor(won_count / max(played, 1) * 100)
 
+    assigns =
+      assign(assigns,
+        won_count: won_count,
+        played: played,
+        show_guess_dist?: show_guess_dist?,
+        win_percent: win_percent
+      )
+
     ~H"""
-    <.modal modal_id="info-modal" open?={@open?}>
+    <.modal_menu modal_id="info-modal" open?={@open?}>
       <div class="flex flex-col items-center space-y-4">
         <h2 class="text-gray-800 text-lg font-semibold uppercase dark:text-white">Статистика</h2>
         <div class="flex items-start space-x-4 md:space-x-6">
-          <.stat value={played} label_first="Зіграно" label_second="" />
-          <.stat value={win_percent} label_first="Виграно" label_second="%" />
+          <.stat value={@played} label_first="Зіграно" label_second="" />
+          <.stat value={@win_percent} label_first="Виграно" label_second="%" />
           <.stat value="Н/Д" label_first="Поточна" label_second="Смуга" />
           <.stat value="Н/Д" label_first="Найбільша" label_second="Смуга" />
         </div>
-        <h2 class="mt-2 text-gray-800 text-lg font-semibold uppercase dark:text-white">Розподіл припущень</h2>
-        <%= if show_guess_dist? do %>
+        <h2 class="mt-2 text-gray-800 text-lg font-semibold uppercase dark:text-white">
+          Розподіл припущень
+        </h2>
+        <%= if @show_guess_dist? do %>
           <.guess_distribution stats={@stats} />
         <% else %>
           <pre class="text-gray-700 text-sm dark:text-white">Відсутні Дані</pre>
         <% end %>
         <%= if @show_countdown? do %>
-          <h2 class="mt-2 text-gray-800 text-lg font-semibold uppercase dark:text-white">Настпупне слово за</h2>
+          <h2 class="mt-2 text-gray-800 text-lg font-semibold uppercase dark:text-white">
+            Настпупне слово за
+          </h2>
           <.countdown />
         <% end %>
       </div>
-    </.modal>
+    </.modal_menu>
     """
   end
 
   def settings_modal(assigns) do
     ~H"""
-    <.modal modal_id="settings-modal">
+    <.modal_menu modal_id="settings-modal">
       <div class="space-y-4">
         <div class="pb-4 flex justify-between border-b border-gray-200 dark:border-gray-400">
           <p class="text-md text-gray-800 font-semibold dark:text-white">Застосувати Темну Тему</p>
@@ -438,7 +477,7 @@ defmodule SlivceWeb.GameComponent do
           </button>
         </div>
       </div>
-    </.modal>
+    </.modal_menu>
     """
   end
 

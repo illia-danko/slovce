@@ -1,7 +1,7 @@
 defmodule SlivceWeb.GameLive do
   use SlivceWeb, :live_view
-  import SlivceWeb.GameComponent
   alias Slivce.{GameEngine, WordServer, Stats, Settings, Game}
+  import SlivceWeb.GameComponent
 
   @session_key "app:session"
   @session_version 1
@@ -10,18 +10,8 @@ defmodule SlivceWeb.GameLive do
   def mount(_params, _session, socket) do
     {game, stats, settings} =
       case get_connect_params(socket) do
-        # Socket not connected yet
-        nil ->
-          game = new_game()
-          stats = Stats.new()
-          settings = Settings.new()
-          {game, stats, settings}
-
         %{"restore" => nil} ->
-          game = new_game()
-          stats = Stats.new()
-          settings = Settings.new()
-          {game, stats, settings}
+          init_new_game()
 
         %{"restore" => data} ->
           game = game_from_json_string(data)
@@ -39,6 +29,9 @@ defmodule SlivceWeb.GameLive do
             end
 
           {game, stats, settings}
+
+        nil ->
+          init_new_game()
       end
 
     {:ok,
@@ -54,6 +47,8 @@ defmodule SlivceWeb.GameLive do
      )}
   end
 
+  defp init_new_game(), do: {new_game(), Stats.new(), Settings.new()}
+
   @impl true
   def render(assigns) do
     ~H"""
@@ -64,7 +59,7 @@ defmodule SlivceWeb.GameLive do
         <.settings_modal checked?={@settings.theme == :dark} />
 
         <div id="game" phx-hook="Session" class="flex flex-col justify-between h-screen">
-          <.header />
+          <.site_header />
 
           <div>
             <div class="flex flex-col items-center">
@@ -87,10 +82,13 @@ defmodule SlivceWeb.GameLive do
           </div>
           <footer class="m-2 sm:m-4 text-center text-xs font-medium tracking-wide">
             <h3>
-              Розроблено <a href="https://github.com/holandes22"><strong>Pablo Klijnjan</strong></a> та
-              <a href="https://github.com/illia-danko"><strong>Иллєю Данько</strong></a>
+              Розроблено <a href="https://github.com/holandes22"><strong>Pablo Klijnjan</strong></a>
+              та <a href="https://github.com/illia-danko"><strong>Иллєю Данько</strong></a>
             </h3>
-            <h3>Ідея - <a href="https://en.wikipedia.org/wiki/Josh_Wardle"><strong>Josh Wardle</strong></a></h3>
+            <h3>
+              Ідея -
+              <a href="https://en.wikipedia.org/wiki/Josh_Wardle"><strong>Josh Wardle</strong></a>
+            </h3>
           </footer>
         </div>
       </div>

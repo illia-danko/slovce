@@ -8,14 +8,15 @@ defmodule Slivce.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # Start the Telemetry supervisor
       SlivceWeb.Telemetry,
-      # Start the PubSub system
+      {DNSCluster, query: Application.get_env(:slivce, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Slivce.PubSub},
-      # Start the Endpoint (http/https)
-      SlivceWeb.Endpoint,
+      # Start the Finch HTTP client for sending emails
+      {Finch, name: Slivce.Finch},
       # Start a worker by calling: Slivce.Worker.start_link(arg)
-      # {Slivce.Worker, arg}
+      # {Slivce.Worker, arg},
+      # Start to serve requests, typically the last entry
+      SlivceWeb.Endpoint,
       {Slivce.WordServer, name: Slivce.WordServer}
     ]
 
