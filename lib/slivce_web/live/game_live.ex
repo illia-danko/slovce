@@ -113,26 +113,26 @@ defmodule SlivceWeb.GameLive do
   end
 
   @impl true
-  def handle_event("submit", %{"guess" => guess}, socket)
-      when byte_size(guess) < 10 do
-    {:noreply, socket |> put_message("Не достатньо літер") |> assign(valid_guess?: false)}
-  end
-
-  @impl true
   def handle_event("submit", %{"guess" => guess}, socket) do
-    if WordServer.valid_guess?(guess) do
-      game = GameEngine.resolve(socket.assigns.game, guess)
-      stats = update_stats(game, socket.assigns.stats)
+    case guess |> String.graphemes() |> length() do
+      n when n < 5 ->
+        {:noreply, socket |> put_message("Не достатньо літер") |> assign(valid_guess?: false)}
 
-      {:noreply,
-       socket
-       |> assign(game: game, stats: stats, revealing?: true, valid_guess?: true)
-       |> maybe_put_game_over_message(game)
-       |> maybe_show_info_dialog(game)
-       |> store_session()
-       |> push_event("keyboard:reset", %{})}
-    else
-      {:noreply, socket |> put_message("Не знайдено в словнику") |> assign(valid_guess?: false)}
+      _ ->
+        if WordServer.valid_guess?(guess) do
+          game = GameEngine.resolve(socket.assigns.game, guess)
+          stats = update_stats(game, socket.assigns.stats)
+
+          {:noreply,
+           socket
+           |> assign(game: game, stats: stats, revealing?: true, valid_guess?: true)
+           |> maybe_put_game_over_message(game)
+           |> maybe_show_info_dialog(game)
+           |> store_session()
+           |> push_event("keyboard:reset", %{})}
+        else
+          {:noreply, socket |> put_message("Не знайдено в словнику") |> assign(valid_guess?: false)}
+        end
     end
   end
 
