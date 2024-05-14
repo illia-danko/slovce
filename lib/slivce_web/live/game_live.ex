@@ -76,7 +76,7 @@ defmodule SlivceWeb.GameLive do
                 />
               </div>
             </div>
-            <div class="mx-2 my-8 sm:mx-4 sm:my-12">
+            <div class="mx-2 mt-8 sm:mx-4 sm:mt-12">
               <.keyboard letter_map={GameEngine.letter_map(@game)} />
             </div>
           </div>
