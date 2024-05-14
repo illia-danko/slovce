@@ -4,10 +4,11 @@
 # See https://hexdocs.pm/phoenix/releases.html
 
 set -eou pipefail
+host="$1"
 
-working_dir="/var/server/slivce"
+working_dir="/var/server/${host}"
 # See systemd homepage.service entry.
-env_conf="/var/server/slivce/env.conf"
+env_conf="/var/server/${host}/env.conf"
 
 pushd "$working_dir"
 
@@ -32,6 +33,6 @@ compile() {
     echo "PHX_SERVER=1" >> "$env_conf" # to start to listen to a PORT
 }
 
-case "$1" in
+case "$2" in
     compile) compile;;
 esac
