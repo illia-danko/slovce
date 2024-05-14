@@ -58,7 +58,7 @@ defmodule SlivceWeb.GameLive do
         <.info_modal stats={@stats} show_countdown?={@game.over?} open?={@show_info_modal?} />
         <.settings_modal checked?={@settings.theme == :dark} />
 
-        <div id="game" phx-hook="Session" class="flex flex-col justify-between h-screen">
+        <div id="game" phx-hook="Session" class="flex flex-col justify-between h-svh">
           <.site_header />
 
           <div>
