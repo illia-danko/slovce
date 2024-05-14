@@ -6,6 +6,7 @@ const fs = require("fs");
 const path = require("path");
 
 module.exports = {
+  darkMode: "class",
   content: ["./js/**/*.js", "../lib/slivce_web.ex", "../lib/slivce_web/**/*.*ex"],
   theme: {
     extend: {
@@ -54,7 +55,7 @@ module.exports = {
     // Embeds Heroicons (https://heroicons.com) into your app.css bundle
     // See your `CoreComponents.icon/1` for more information.
     //
-    plugin(function({ matchComponents, theme }) {
+    plugin(function ({ matchComponents, theme }) {
       let iconsDir = path.join(__dirname, "../deps/heroicons/optimized");
       let values = {};
       let icons = [
