@@ -317,56 +317,126 @@ defmodule SlivceWeb.GameComponent do
   def help_modal(assigns) do
     ~H"""
     <.modal_menu modal_id="help-modal" open?={@open?}>
-      <div class="text-sm text-gray-800 dark:text-white">
-        <h2 class="text-xl font-bold text-center">Як грати</h2>
-        <h1 class="text-lg font-medium mt-6">Відгадати Слівце з 6 спроб.</h1>
-        <ul class="list-disc list-inside mt-2 leading-loose">
-          <li>Кожна спроба повинна буди справжнім словом з <strong>5</strong> літер.</li>
-          <li>Колір клітинки змінюється і відображає як близько ви до розв'язання слова.</li>
+      <div class="border-b font-medium text-center">
+        <ul class="flex -mb-px">
+          <li>
+            <button
+              class="font-medium px-4 pb-4 border-b-2 border-transparent text-gray-500 disabled:text-blue-600 disabled:border-blue-600 hover:text-gray-600 hover:border-b-2 hover:border-gray-600 focus:text-blue-600 focus:border-blue-600"
+              phx-click={toggle_help_modal(%{id: "#how-to-play-button"})}
+              disabled
+              id="how-to-play-button"
+            >
+              Як грати
+            </button>
+          </li>
+          <li>
+            <button
+              class="font-medium px-4 pb-4 border-b-2 border-transparent text-gray-500 disabled:text-blue-600 disabled:border-blue-600 hover:text-gray-600 hover:border-b-2 hover:border-gray-600 focus:text-blue-600 focus:border-blue-600"
+              phx-click={toggle_help_modal(%{id: "#motivation-button"})}
+              enabled
+              id="motivation-button"
+            >
+              Мотивація
+            </button>
+          </li>
         </ul>
-        <div class="mt-6">
-          <p1 class="text-lg font-medium">Приклади:</p1>
+      </div>
+      <div class="text-sm text-gray-800 dark:text-white">
+        <div id="how-to-play">
+          <h1 class="text-lg font-medium mt-6">Відгадати Слівце з 6 спроб.</h1>
+          <ul class="list-disc list-inside mt-2 leading-loose">
+            <li>Кожна спроба повинна буди справжнім словом з <strong>5</strong> літер.</li>
+            <li>Колір клітинки змінюється і відображає як близько ви до розв'язання слова.</li>
+          </ul>
+          <div class="mt-6">
+            <p1 class="text-lg font-medium">Приклади:</p1>
+          </div>
+
+          <% extra_classes = [
+            "text-gray-100 bg-green-500",
+            "border-2 border-gray-500",
+            "border-2 border-gray-500",
+            "border-2 border-gray-500",
+            "border-2 border-gray-500"
+          ] %>
+          <.help_modal_example word="осінь" extra_classes={extra_classes}>
+            <strong>О</strong> в цьому Cлівці та знаходиться на правильній позиції.
+          </.help_modal_example>
+
+          <% extra_classes = [
+            "border-2 border-gray-500",
+            "text-gray-100 bg-yellow-500",
+            "border-2 border-gray-500",
+            "border-2 border-gray-500",
+            "border-2 border-gray-500"
+          ] %>
+          <.help_modal_example word="дужий" extra_classes={extra_classes}>
+            <strong>У</strong> є в цьому Cлівці, але знаходиться на іншій позиції.
+          </.help_modal_example>
+
+          <% extra_classes = [
+            "border-2 border-gray-500",
+            "border-2 border-gray-500",
+            "border-2 border-gray-500",
+            "text-gray-100 bg-gray-500",
+            "border-2 border-gray-500"
+          ] %>
+          <.help_modal_example word="бігти" extra_classes={extra_classes}>
+            <strong>Т</strong> немає в цьому Cлівці ні на якій позиції.
+          </.help_modal_example>
+
+          <div class="mt-6">
+            <p1>Кожен день з'являється <strong>1</strong> нове слово.</p1>
+          </div>
         </div>
+      </div>
+      <div id="motivation" class="hidden mt-6">
+        <div class="text-sm leading-loose">
+          <p1 class="inline-block mt-2">
+            Ціль проєкту - допомогти Українцям повторити та вивчити Українські слова, і найголовніше
+            - дістати задоволення!
+          </p1>
+          <p1 class="inline-block mt-2">
+            На думку автора, найкращий засіб для навчання це:
+          </p1>
 
-        <% extra_classes = [
-          "text-gray-100 bg-green-500",
-          "border-2 border-gray-500",
-          "border-2 border-gray-500",
-          "border-2 border-gray-500",
-          "border-2 border-gray-500"
-        ] %>
-        <.help_modal_example word="осінь" extra_classes={extra_classes}>
-          <strong>О</strong> в цьому Cлівці та знаходиться на правильній позиції.
-        </.help_modal_example>
+          <ul class="list-disc list-inside italic">
+            <li>Мотивація самої людини.</li>
+            <li>Необхідний інструмент, який допоможе на шляху навчання.</li>
+          </ul>
 
-        <% extra_classes = [
-          "border-2 border-gray-500",
-          "text-gray-100 bg-yellow-500",
-          "border-2 border-gray-500",
-          "border-2 border-gray-500",
-          "border-2 border-gray-500"
-        ] %>
-        <.help_modal_example word="дужий" extra_classes={extra_classes}>
-          <strong>У</strong> є в цьому Cлівці, але знаходиться на іншій позиції.
-        </.help_modal_example>
-
-        <% extra_classes = [
-          "border-2 border-gray-500",
-          "border-2 border-gray-500",
-          "border-2 border-gray-500",
-          "text-gray-100 bg-gray-500",
-          "border-2 border-gray-500"
-        ] %>
-        <.help_modal_example word="бігти" extra_classes={extra_classes}>
-          <strong>Т</strong> немає в цьому Cлівці ні на якій позиції.
-        </.help_modal_example>
-
-        <div class="mt-6">
-          <p1>Кожен день з'являється <strong>1</strong> нове слово.</p1>
+          <p1 class="inline-block mt-2">
+            <strong>Слівце</strong> - це проєкт, як раз той інструмент, завдяки якому можна набрати
+            потрібну кількість словникового запасу слів в легкій та розважливій формі.
+          </p1>
+          <p1 class="inline-block mt-2">Граючи в <strong>Слівце</strong> ви зможете:</p1>
+          <ul class="list-disc list-inside">
+            <li>Ділитися своїми досягненнями з друзями та близькими.</li>
+            <li>Мати доступ до історії вже відомих вам слів.</li>
+            <li>Та багато іншого!</li>
+          </ul>
         </div>
       </div>
     </.modal_menu>
     """
+  end
+
+  defp toggle_help_modal(%{id: id}, js \\ %JS{}) do
+    set_attribute_el = id
+
+    remove_attribute_el =
+      case id do
+        "#motivation-button" -> "#how-to-play-button"
+        "#how-to-play-button" -> "#motivation-button"
+      end
+
+    js
+    |> JS.toggle_class("hidden", to: "#how-to-play")
+    |> JS.toggle_class("hidden", to: "#motivation")
+    |> JS.set_attribute({"disabled", true}, to: set_attribute_el)
+    |> JS.remove_attribute("disabled", to: remove_attribute_el)
+
+    # |> JS.dispatch("toggle:disabled", to: "##{id}")
   end
 
   def help_modal_example(assigns) do
