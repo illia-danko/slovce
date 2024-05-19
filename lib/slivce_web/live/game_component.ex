@@ -291,7 +291,7 @@ defmodule SlivceWeb.GameComponent do
             <button
               type="button"
               phx-click={hide_modal_menu(@modal_id)}
-              class="bg-white rounded-md text-gray-600 hover:text-gray-800 dark:bg-gray-800 dark:text-white dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              class="bg-white rounded-md text-gray-600 hover:text-gray-800 dark:bg-gray-800 dark:text-white dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 dark:focus:ring-blue-400"
             >
               <span class="sr-only">Close</span>
               <!-- Heroicon name: outline/x -->
@@ -322,7 +322,11 @@ defmodule SlivceWeb.GameComponent do
           <ul class="flex -mb-px">
             <li>
               <button
-                class="font-medium px-4 pb-2 md:pb-4 border-b-2 border-transparent text-gray-500 dark:text-gray-400 disabled:text-blue-600 disabled:border-blue-600 dark:disabled:text-blue-400 dark:disabled:border-blue-400 hover:border-b-2 hover:text-gray-600 hover:border-gray-600 dark:hover:text-gray-300 dark:hover:border-gray-300"
+                class="font-medium px-4 pb-2 md:pb-4 border-b-2 border-transparent text-gray-500
+                dark:text-gray-400 disabled:text-blue-600 disabled:border-blue-600
+                dark:disabled:text-blue-400 dark:disabled:border-blue-400 hover:border-b-2
+                hover:text-gray-600 hover:border-gray-600 dark:hover:text-gray-300
+                dark:hover:border-gray-300"
                 phx-click={toggle_help_modal_nav(%{id: "#how-to-play-button"})}
                 disabled
                 id="how-to-play-button"
@@ -332,7 +336,11 @@ defmodule SlivceWeb.GameComponent do
             </li>
             <li>
               <button
-                class="font-medium px-4 pb-2 md:pb-4 border-b-2 border-transparent text-gray-500 dark:text-gray-400 disabled:text-blue-600 disabled:border-blue-600 dark:disabled:text-blue-400 dark:disabled:border-blue-400 hover:border-b-2 hover:text-gray-600 hover:border-gray-600 dark:hover:text-gray-300 dark:hover:border-gray-300"
+                class="font-medium px-4 pb-2 md:pb-4 border-b-2 border-transparent text-gray-500
+                dark:text-gray-400 disabled:text-blue-600 disabled:border-blue-600
+                dark:disabled:text-blue-400 dark:disabled:border-blue-400 hover:border-b-2
+                hover:text-gray-600 hover:border-gray-600 dark:hover:text-gray-300
+                dark:hover:border-gray-300"
                 phx-click={toggle_help_modal_nav(%{id: "#motivation-button"})}
                 enabled
                 id="motivation-button"
@@ -517,7 +525,10 @@ defmodule SlivceWeb.GameComponent do
             phx-click="toggle_theme"
             type="button"
             class={
-              "#{if(@checked?, do: "bg-green-600", else: "bg-gray-200")} relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              "#{if(@checked?, do: "bg-green-600", else: "bg-gray-200")} relative inline-flex
+            flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer
+            transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2
+            focus:ring-offset-2 focus:ring-blue-600 dark:focus:ring-blue-400"
             }
             role="switch"
             aria-checked="false"
@@ -526,7 +537,9 @@ defmodule SlivceWeb.GameComponent do
             <span
               aria-hidden="true"
               class={
-                "#{if(@checked?, do: "translate-x-5", else: "translate-x-0")} pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"
+                "#{if(@checked?, do: "translate-x-5", else: "translate-x-0")} pointer-events-none
+              inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition
+              ease-in-out duration-200"
               }
             >
             </span>
