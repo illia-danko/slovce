@@ -342,9 +342,9 @@ defmodule SlivceWeb.GameComponent do
             </li>
           </ul>
         </div>
-        <div class="text-sm lg:text-base">
+        <div class="text-sm md:text-base">
           <div id="how-to-play">
-            <h1 class="text-lg lg:text-xl font-medium mt-6 lg:mt-10">Відгадати Слівце з 6 спроб.</h1>
+            <h1 class="text-lg md:text-xl font-medium mt-6 md:mt-10">Відгадати Слівце з 6 спроб.</h1>
             <ul class="list-disc list-inside mt-2 leading-loose">
               <li>Кожна спроба повинна буди справжнім словом з <strong>5</strong> літер.</li>
               <li>Колір клітинки змінюється і відображає як близько ви до розв'язання слова.</li>
@@ -392,7 +392,7 @@ defmodule SlivceWeb.GameComponent do
           </div>
         </div>
         <div id="motivation" class="hidden mt-6">
-          <div class="text-sm lg:text-base">
+          <div class="text-sm md:text-base">
             <p1 class="inline-block mt-2 leading-loose">
               Ціль проєкту - допомогти Українцям повторити та вивчити Українські слова, і найголовніше
               - дістати задоволення!
