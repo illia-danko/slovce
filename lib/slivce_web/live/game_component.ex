@@ -323,7 +323,7 @@ defmodule SlivceWeb.GameComponent do
             <li>
               <button
                 class="font-medium px-4 pb-2 md:pb-4 border-b-2 border-transparent text-gray-500 dark:text-gray-400 disabled:text-blue-600 disabled:border-blue-600 dark:disabled:text-blue-400 dark:disabled:border-blue-400 hover:border-b-2 hover:text-gray-600 hover:border-gray-600 dark:hover:text-gray-300 dark:hover:border-gray-300"
-                phx-click={toggle_help_modal(%{id: "#how-to-play-button"})}
+                phx-click={toggle_help_modal_nav(%{id: "#how-to-play-button"})}
                 disabled
                 id="how-to-play-button"
               >
@@ -333,7 +333,7 @@ defmodule SlivceWeb.GameComponent do
             <li>
               <button
                 class="font-medium px-4 pb-2 md:pb-4 border-b-2 border-transparent text-gray-500 dark:text-gray-400 disabled:text-blue-600 disabled:border-blue-600 dark:disabled:text-blue-400 dark:disabled:border-blue-400 hover:border-b-2 hover:text-gray-600 hover:border-gray-600 dark:hover:text-gray-300 dark:hover:border-gray-300"
-                phx-click={toggle_help_modal(%{id: "#motivation-button"})}
+                phx-click={toggle_help_modal_nav(%{id: "#motivation-button"})}
                 enabled
                 id="motivation-button"
               >
@@ -423,7 +423,7 @@ defmodule SlivceWeb.GameComponent do
     """
   end
 
-  defp toggle_help_modal(%{id: id}, js \\ %JS{}) do
+  defp toggle_help_modal_nav(%{id: id}, js \\ %JS{}) do
     set_attribute_el = id
 
     remove_attribute_el =
@@ -437,8 +437,6 @@ defmodule SlivceWeb.GameComponent do
     |> JS.toggle_class("hidden", to: "#motivation")
     |> JS.set_attribute({"disabled", true}, to: set_attribute_el)
     |> JS.remove_attribute("disabled", to: remove_attribute_el)
-
-    # |> JS.dispatch("toggle:disabled", to: "##{id}")
   end
 
   def help_modal_example(assigns) do
