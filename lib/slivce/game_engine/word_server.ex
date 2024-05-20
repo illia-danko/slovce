@@ -1,6 +1,6 @@
 defmodule Slivce.WordServer do
   use GenServer
-  alias Slivce.Constants
+  alias Slivce.Words
 
   @day_in_seconds 86400
   ## API
@@ -21,7 +21,11 @@ defmodule Slivce.WordServer do
 
   @impl true
   def init(:ok) do
-    state = %{words: Constants.words()}
+    words =
+      Words.list_words()
+      |> Enum.map(fn word -> word.title end)
+
+    state = %{words: words}
     {:ok, state}
   end
 

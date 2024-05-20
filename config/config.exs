@@ -8,6 +8,7 @@
 import Config
 
 config :slivce,
+  ecto_repos: [Slivce.Repo],
   generators: [timestamp_type: :utc_datetime]
 
 # Configures the endpoint

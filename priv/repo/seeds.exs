@@ -1,7 +1,7 @@
-defmodule Slivce.Constants do
-  # from https://github.com/cwackerfuss/react-wordle/blob/main/src/constants
-  def words() do
-    ~w(
+alias Slivce.Words
+
+words =
+  ~w(
     б'юік
     б'юїк
     в'язь
@@ -4410,5 +4410,8 @@ defmodule Slivce.Constants do
     ґрунт
     ґудзь
     ґуґля)
-  end
-end
+
+words
+|> Enum.each(fn word ->
+  Words.create_word(%{title: word})
+end)

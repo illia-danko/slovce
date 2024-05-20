@@ -9,6 +9,7 @@ defmodule Slivce.Application do
   def start(_type, _args) do
     children = [
       SlivceWeb.Telemetry,
+      Slivce.Repo,
       {DNSCluster, query: Application.get_env(:slivce, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Slivce.PubSub},
       # Start the Finch HTTP client for sending emails

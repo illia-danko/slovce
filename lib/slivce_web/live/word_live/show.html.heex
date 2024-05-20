@@ -1,0 +1,30 @@
+<div class="flex justify-center items-center h-svh">
+  <div>
+    <.header>
+      Word <%= @word.id %>
+      <:subtitle>This is a word record from your database.</:subtitle>
+      <:actions>
+        <.link patch={~p"/words/#{@word}/show/edit"} phx-click={JS.push_focus()}>
+          <.button>Edit word</.button>
+        </.link>
+      </:actions>
+    </.header>
+
+    <.list>
+      <:item title="Title"><%= @word.title %></:item>
+    </.list>
+
+    <.back navigate={~p"/words"}>Back to words</.back>
+
+    <.modal :if={@live_action == :edit} id="word-modal" show on_cancel={JS.patch(~p"/words/#{@word}")}>
+      <.live_component
+        module={SlivceWeb.WordLive.FormComponent}
+        id={@word.id}
+        title={@page_title}
+        action={@live_action}
+        word={@word}
+        patch={~p"/words/#{@word}"}
+      />
+    </.modal>
+  </div>
+</div>
