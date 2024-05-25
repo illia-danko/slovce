@@ -1,8 +1,9 @@
 defmodule Slivce.GameEngine do
   alias Slivce.Game
+  alias Slivce.WordServer
 
-  def new(word_to_guess) do
-    word_to_guess |> normalize() |> Game.new()
+  def new() do
+    Game.new()
   end
 
   def guesses_left(%Game{} = game) do
@@ -16,53 +17,57 @@ defmodule Slivce.GameEngine do
   def won?(game), do: game.result == :won
 
   @spec analyze(Game.t(), String.t()) :: Game.guess()
-  def analyze(%Game{word: word}, guess) when guess == word do
-    guess
-    |> normalize()
-    |> String.graphemes()
-    |> Enum.map(fn char -> %{char: char, state: :correct} end)
-  end
+  def analyze(%Game{}, guess) do
+    word =
+      WordServer.word_to_guess()
+      |> normalize()
 
-  def analyze(%Game{word: word}, guess) do
-    guess = normalize(guess)
-
-    correct_ones =
+    if guess == word do
       guess
+      |> normalize()
       |> String.graphemes()
-      |> Enum.with_index()
-      |> Enum.filter(fn {char, index} -> char == String.at(word, index) end)
+      |> Enum.map(fn char -> %{char: char, state: :correct} end)
+    else
+      guess = normalize(guess)
 
-    # Deal with the case a letter appears more times than in the solution
-    # (if solution contains two "C" but we have 3 "C" in the guess for example)
-    maybe_incorrect_ones =
-      guess
-      |> String.graphemes()
-      |> Enum.with_index()
-      |> Enum.filter(fn {char, index} ->
-        String.contains?(word, char) and not Enum.member?(correct_ones, {char, index})
-      end)
+      correct_ones =
+        guess
+        |> String.graphemes()
+        |> Enum.with_index()
+        |> Enum.filter(fn {char, index} -> char == String.at(word, index) end)
 
-    solution_frequencies = word |> String.graphemes() |> Enum.frequencies()
-    guess_frequencies = guess |> String.graphemes() |> Enum.frequencies()
+      # Deal with the case a letter appears more times than in the solution
+      # (if solution contains two "C" but we have 3 "C" in the guess for example)
+      maybe_incorrect_ones =
+        guess
+        |> String.graphemes()
+        |> Enum.with_index()
+        |> Enum.filter(fn {char, index} ->
+          String.contains?(word, char) and not Enum.member?(correct_ones, {char, index})
+        end)
 
-    incorrect_ones =
-      Enum.reject(maybe_incorrect_ones, fn {char, _index} ->
-        char_already_in_correct? =
-          Enum.find(correct_ones, fn {correct_char, _index} -> correct_char == char end)
+      solution_frequencies = word |> String.graphemes() |> Enum.frequencies()
+      guess_frequencies = guess |> String.graphemes() |> Enum.frequencies()
 
-        guess_frequencies[char] > solution_frequencies[char] and char_already_in_correct?
-      end)
+      incorrect_ones =
+        Enum.reject(maybe_incorrect_ones, fn {char, _index} ->
+          char_already_in_correct? =
+            Enum.find(correct_ones, fn {correct_char, _index} -> correct_char == char end)
 
-    for {char, index} <- guess |> String.graphemes() |> Enum.with_index() do
-      cond do
-        Enum.member?(correct_ones, {char, index}) ->
-          %{char: char, state: :correct}
+          guess_frequencies[char] > solution_frequencies[char] and char_already_in_correct?
+        end)
 
-        Enum.member?(incorrect_ones, {char, index}) ->
-          %{char: char, state: :incorrect}
+      for {char, index} <- guess |> String.graphemes() |> Enum.with_index() do
+        cond do
+          Enum.member?(correct_ones, {char, index}) ->
+            %{char: char, state: :correct}
 
-        true ->
-          %{char: char, state: :invalid}
+          Enum.member?(incorrect_ones, {char, index}) ->
+            %{char: char, state: :incorrect}
+
+          true ->
+            %{char: char, state: :invalid}
+        end
       end
     end
   end

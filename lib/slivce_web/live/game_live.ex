@@ -18,8 +18,13 @@ defmodule SlivceWeb.GameLive do
           stats = stats_from_json_string(data)
           settings = settings_from_json_string(data)
 
+          maybe_guessed_word =
+            game.guesses
+            |> Enum.at(0)
+            |> Enum.map_join(& &1.char)
+
           word_changed? =
-            String.upcase(game.word) != WordServer.word_to_guess() |> String.upcase()
+            String.upcase(maybe_guessed_word) != WordServer.word_to_guess() |> String.upcase()
 
           game =
             if game.over? and word_changed? do
@@ -181,7 +186,7 @@ defmodule SlivceWeb.GameLive do
     push_event(socket, "session:store", %{key: @session_key, data: data})
   end
 
-  defp new_game(), do: WordServer.word_to_guess() |> GameEngine.new()
+  defp new_game(), do: GameEngine.new()
 
   defp update_stats(%{result: :playing}, stats), do: stats
 
