@@ -2,15 +2,12 @@ defmodule Slivce.WordServer do
   use GenServer
   alias Slivce.Words
 
-  @day_in_seconds 86400
-  ## API
-
   def start_link(opts) do
     GenServer.start_link(__MODULE__, :ok, opts)
   end
 
-  def word_to_guess() do
-    GenServer.call(__MODULE__, :get_word)
+  def words_to_guess() do
+    GenServer.call(__MODULE__, :get_words)
   end
 
   def valid_guess?(guess) do
@@ -21,37 +18,59 @@ defmodule Slivce.WordServer do
 
   @impl true
   def init(:ok) do
-    words =
-      Words.list_words()
-      |> Enum.map(fn word -> word.title end)
-
-    state = %{words: words}
-    {:ok, state}
+    {:ok, scheduller_words_of_the_day()}
   end
 
   @impl true
-  def handle_call(:get_word, _from, %{words: words} = state) do
-    word = get_word_of_the_day(words)
-    {:reply, word, state}
+  def handle_call(:get_words, _from, %{words: words} = state) do
+    words =
+      words
+      |> get_words_of_the_day()
+      |> normalize_words()
+
+    {:reply, words, state}
   end
 
   @impl true
   def handle_call({:valid_guess?, guess}, _from, state) do
     guess = String.downcase(guess)
-    valid? = Enum.member?(state.words, guess)
+    valid? = guess in state.lookup
     {:reply, valid?, state}
   end
 
-  def get_word_of_the_day(words, opts \\ []) do
-    # Taken from https://github.com/cwackerfuss/react-wordle/blob/main/src/lib/words.ts#L42
-    epoch_in_seconds =
-      Keyword.get(opts, :epoch_in_seconds) || ~U[2022-01-01 00:00:00.00Z] |> DateTime.to_unix()
+  @impl true
+  def handle_info(:scheduller_words, %{words: words}) do
+    current_words = get_words_of_the_day(words)
+    {_, nil} = Words.update_timestamp(current_words)
 
-    now_in_seconds =
-      Keyword.get(opts, :now_in_seconds) || "Etc/UTC" |> DateTime.now!() |> DateTime.to_unix()
-
-    len = length(words)
-    index = ((now_in_seconds - epoch_in_seconds) / @day_in_seconds) |> floor() |> rem(len)
-    Enum.at(words, index)
+    {:noreply, scheduller_words_of_the_day()}
   end
+
+  defp get_words_of_the_day(words) do
+    words
+    |> Enum.take(get_words_of_the_day_number())
+  end
+
+  defp scheduller_words_of_the_day(duration \\ next_day_duration_ms()) do
+    words = Words.list_words()
+    lookup = MapSet.new(normalize_words(words))
+    state = %{words: words, lookup: lookup}
+
+    Process.send_after(self(), :scheduller_words, duration)
+    state
+  end
+
+  defp next_day_duration_ms() do
+    current_datetime = Timex.now(get_timzone())
+
+    next_day = Timex.shift(current_datetime, days: 1)
+    beginning_of_next_day = Timex.beginning_of_day(next_day)
+
+    datatime_to_unix(beginning_of_next_day) - datatime_to_unix(current_datetime)
+  end
+
+  defp normalize_words(words), do: words |> Enum.map(fn word -> word.title end)
+  defp datatime_to_unix(t), do: DateTime.to_unix(t, :millisecond)
+  defp get_words_of_the_day_number(), do: Slivce.config([:game, :words_of_the_day_number])
+  defp get_timzone(), do: Slivce.config([:system, :timezone])
 end

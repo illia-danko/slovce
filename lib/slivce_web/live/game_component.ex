@@ -477,13 +477,15 @@ defmodule SlivceWeb.GameComponent do
     played = won_count + assigns.stats.lost
     show_guess_dist? = played > 0
     win_percent = floor(won_count / max(played, 1) * 100)
+    has_more_games_today? = assigns.game.current_word_index + 1 < get_words_of_the_day_number()
 
     assigns =
       assign(assigns,
         won_count: won_count,
         played: played,
         show_guess_dist?: show_guess_dist?,
-        win_percent: win_percent
+        win_percent: win_percent,
+        has_more_games_today: has_more_games_today?
       )
 
     ~H"""
@@ -491,7 +493,7 @@ defmodule SlivceWeb.GameComponent do
       <div class="flex flex-col items-center space-y-4">
         <h2 class="text-gray-800 text-lg font-semibold uppercase dark:text-white">Статистика</h2>
         <div class="flex items-start space-x-4 md:space-x-6">
-          <.stat value={@played} label_first="Зіграно" label_second="" />
+          <.stat value={"#{@played}/#{get_words_of_the_day_number()}"} label_first="Зіграно" label_second="" />
           <.stat value={@win_percent} label_first="Виграно" label_second="%" />
           <.stat value="Н/Д" label_first="Поточна" label_second="Смуга" />
           <.stat value="Н/Д" label_first="Найбільша" label_second="Смуга" />
@@ -504,11 +506,24 @@ defmodule SlivceWeb.GameComponent do
         <% else %>
           <pre class="text-gray-700 text-sm dark:text-white">Відсутні Дані</pre>
         <% end %>
-        <%= if @show_countdown? do %>
+        <%= if @show_countdown? and not @has_more_games_today do %>
           <h2 class="mt-2 text-gray-800 text-lg font-semibold uppercase dark:text-white">
             Настпупне слово за
           </h2>
           <.countdown />
+        <% end %>
+        <%= if @show_countdown? and @has_more_games_today do %>
+          <div>
+            <button
+              class="mt-2 border-2 p-2 border-gray-900 text-gray-900 bg-gray-100 dark:bg-gray-700
+                     dark:text-white rounded-md dark:border-white shadow hover:text-gray-600
+                     hover:border-gray-600 dark:hover:text-gray-300 dark:hover:border-gray-300"
+              type="button"
+              phx-click="restart"
+            >
+              Наступне Слівце
+            </button>
+          </div>
         <% end %>
       </div>
     </.modal_menu>
@@ -624,4 +639,6 @@ defmodule SlivceWeb.GameComponent do
     </div>
     """
   end
+
+  defp get_words_of_the_day_number(), do: Slivce.config([:game, :words_of_the_day_number])
 end

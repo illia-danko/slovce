@@ -18,7 +18,7 @@ defmodule Slivce.Words do
 
   """
   def list_words do
-    Repo.all(Word)
+    Repo.all(from(w in Word, order_by: [{:asc, :updated_at}]))
   end
 
   @doc """
@@ -71,6 +71,13 @@ defmodule Slivce.Words do
     word
     |> Word.changeset(attrs)
     |> Repo.update()
+  end
+
+  def update_timestamp(words) when is_list(words) do
+    ids = Enum.map(words, & &1.id)
+
+    from(w in Word, where: w.id in ^ids)
+    |> Repo.update_all(set: [updated_at: NaiveDateTime.utc_now()])
   end
 
   @doc """

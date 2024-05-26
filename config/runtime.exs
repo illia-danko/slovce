@@ -117,3 +117,7 @@ if config_env() == :prod do
   #
   # See https://hexdocs.pm/swoosh/Swoosh.html#module-installation for details.
 end
+
+config :slivce, :game, words_of_the_day_number: 5
+
+config :slivce, :system, timezone: "Europe/Kiev"

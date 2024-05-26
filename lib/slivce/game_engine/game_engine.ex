@@ -2,8 +2,8 @@ defmodule Slivce.GameEngine do
   alias Slivce.Game
   alias Slivce.WordServer
 
-  def new() do
-    Game.new()
+  def new(current_word_index) do
+    Game.new(current_word_index)
   end
 
   def guesses_left(%Game{} = game) do
@@ -17,9 +17,10 @@ defmodule Slivce.GameEngine do
   def won?(game), do: game.result == :won
 
   @spec analyze(Game.t(), String.t()) :: Game.guess()
-  def analyze(%Game{}, guess) do
+  def analyze(%Game{} = game, guess) do
     word =
-      WordServer.word_to_guess()
+      WordServer.words_to_guess()
+      |> Enum.at(game.current_word_index)
       |> normalize()
 
     if guess == word do

@@ -52,7 +52,9 @@ defmodule Slivce.MixProject do
       {:bandit, "~> 1.2"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.0"},
-      {:postgrex, ">= 0.0.0"}
+      {:postgrex, ">= 0.0.0"},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:timex, "~> 3.7"}
     ]
   end
 

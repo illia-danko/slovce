@@ -19,16 +19,24 @@ defmodule SlivceWeb.GameLive do
           settings = settings_from_json_string(data)
 
           maybe_guessed_word =
-            game.guesses
-            |> Enum.at(0)
-            |> Enum.map_join(& &1.char)
+            if Enum.empty?(game.guesses) do
+              ""
+            else
+              game.guesses
+              |> Enum.at(0)
+              |> Enum.map_join(& &1.char)
+            end
 
-          word_changed? =
-            String.upcase(maybe_guessed_word) != WordServer.word_to_guess() |> String.upcase()
+          current_word =
+            WordServer.words_to_guess()
+            |> Enum.at(game.current_word_index)
+            |> String.upcase()
+
+          word_changed? = String.upcase(maybe_guessed_word) != current_word
 
           game =
             if game.over? and word_changed? do
-              new_game()
+              new_game(game.current_word_index)
             else
               game
             end
@@ -52,7 +60,7 @@ defmodule SlivceWeb.GameLive do
      )}
   end
 
-  defp init_new_game(), do: {new_game(), Stats.new(), Settings.new()}
+  defp init_new_game(), do: {new_game(0), Stats.new(), Settings.new()}
 
   @impl true
   def render(assigns) do
@@ -60,7 +68,7 @@ defmodule SlivceWeb.GameLive do
     <div class={"#{if(@settings.theme == :dark, do: "dark", else: "")}"}>
       <div class="dark:bg-gray-900">
         <.help_modal open?={@show_help_modal?} />
-        <.info_modal stats={@stats} show_countdown?={@game.over?} open?={@show_info_modal?} />
+        <.info_modal game={@game} stats={@stats} show_countdown?={@game.over?} open?={@show_info_modal?} />
         <.settings_modal checked?={@settings.theme == :dark} />
 
         <div id="game" phx-hook="Session" class="flex flex-col justify-between h-svh">
@@ -135,6 +143,18 @@ defmodule SlivceWeb.GameLive do
   end
 
   @impl true
+  def handle_event("restart", _, socket) do
+    game = new_game(socket.assigns.game.current_word_index + 1)
+
+    socket =
+      socket
+      |> assign(game: game, show_info_modal?: false)
+      |> store_session()
+
+    {:noreply, socket}
+  end
+
+  @impl true
   def handle_info(:clear_message, socket),
     do: {:noreply, assign(socket, message: nil, revealing?: false)}
 
@@ -186,7 +206,7 @@ defmodule SlivceWeb.GameLive do
     push_event(socket, "session:store", %{key: @session_key, data: data})
   end
 
-  defp new_game(), do: GameEngine.new()
+  defp new_game(current_word_index), do: GameEngine.new(current_word_index)
 
   defp update_stats(%{result: :playing}, stats), do: stats
 
