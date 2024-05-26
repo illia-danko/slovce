@@ -31,8 +31,14 @@ compile() {
     echo "MIX_ENV=$MIX_ENV" > "$env_conf"
     echo "SECRET_KEY_BASE=$(mix phx.gen.secret)" >> "$env_conf"
     echo "PHX_SERVER=1" >> "$env_conf" # to start to listen to a PORT
+    cat "$HOME/.env" >> "$env_conf" # to store the secrets.
+}
+
+migrate() {
+    export $(cat $env_conf) && mix ecto.setup
 }
 
 case "$2" in
     compile) compile;;
+    migrate) migrate;;
 esac

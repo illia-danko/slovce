@@ -44,6 +44,7 @@ deploy:
 		config/prod.exs root@slivce.net:/var/server/slivce/config
 	@rsync -vrP --delete-after build.sh root@slivce.net:/var/server/slivce
 	@ssh root@slivce.net -t 'bash /var/server/slivce/build.sh slivce compile'
+	@ssh root@slivce.net -t 'bash /var/server/slivce/build.sh slivce migrate'
 	@ssh root@slivce.net -t 'systemctl restart slivce.service'
 
 .PHONY: deps build format test lint live database_init database_drop deploy
