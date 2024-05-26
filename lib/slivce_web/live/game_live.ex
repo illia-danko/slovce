@@ -14,34 +14,35 @@ defmodule SlivceWeb.GameLive do
           init_new_game()
 
         %{"restore" => data} ->
-          game = game_from_json_string(data)
-          stats = stats_from_json_string(data)
-          settings = settings_from_json_string(data)
+          # Wrap in try block for the case when the localStorage schmea been has changed.
+          try do
+            game = game_from_json_string(data)
+            stats = stats_from_json_string(data)
+            settings = settings_from_json_string(data)
 
-          maybe_guessed_word =
-            if Enum.empty?(game.guesses) do
-              ""
-            else
-              game.guesses
-              |> Enum.at(0)
-              |> Enum.map_join(& &1.char)
-            end
+            maybe_guessed_word =
+              if Enum.empty?(game.guesses) do
+                ""
+              else
+                game.guesses
+                |> Enum.at(0)
+                |> Enum.map_join(& &1.char)
+              end
 
-          current_word =
-            WordServer.words_to_guess()
-            |> Enum.at(game.current_word_index)
-            |> String.upcase()
+            current_word = get_current_word(game)
+            word_changed? = String.upcase(maybe_guessed_word) != current_word
 
-          word_changed? = String.upcase(maybe_guessed_word) != current_word
+            game =
+              if game.over? and word_changed? do
+                new_game(game.current_word_index)
+              else
+                game
+              end
 
-          game =
-            if game.over? and word_changed? do
-              new_game(game.current_word_index)
-            else
-              game
-            end
-
-          {game, stats, settings}
+            {game, stats, settings}
+          rescue
+            _ -> init_new_game()
+          end
 
         nil ->
           init_new_game()
@@ -179,8 +180,8 @@ defmodule SlivceWeb.GameLive do
 
   defp maybe_put_game_over_message(socket, %{over?: false}), do: socket
 
-  defp maybe_put_game_over_message(socket, %{result: :lost, word: word}),
-    do: put_message(socket, "Слово було #{word}")
+  defp maybe_put_game_over_message(socket, %{result: :lost} = game),
+    do: put_message(socket, "Слово було #{get_current_word(game)}")
 
   defp maybe_put_game_over_message(socket, %{} = game) do
     message =
@@ -258,5 +259,11 @@ defmodule SlivceWeb.GameLive do
     %{settings: settings_data} = Jason.decode!(data, keys: :atoms)
     settings = struct!(Settings, settings_data)
     %{settings | theme: String.to_existing_atom(settings.theme)}
+  end
+
+  defp get_current_word(game) do
+    WordServer.words_to_guess()
+    |> Enum.at(game.current_word_index)
+    |> String.upcase()
   end
 end
