@@ -56,7 +56,7 @@ defmodule SlivceWeb.GameLive do
        message: nil,
        valid_guess?: true,
        settings: settings,
-       show_help_modal?: not game.over?,
+       show_help_modal?: not game.over? and game.current_word_index == 0,
        show_info_modal?: game.over?
      )}
   end
@@ -145,7 +145,8 @@ defmodule SlivceWeb.GameLive do
 
   @impl true
   def handle_event("restart", _, socket) do
-    game = new_game(socket.assigns.game.current_word_index + 1)
+    new_index = rem(get_words_of_the_day_number(), socket.assigns.game.current_word_index + 1)
+    game = new_game(new_index)
 
     socket =
       socket
@@ -266,4 +267,6 @@ defmodule SlivceWeb.GameLive do
     |> Enum.at(game.current_word_index)
     |> String.upcase()
   end
+
+  defp get_words_of_the_day_number(), do: Slivce.config([:game, :words_of_the_day_number])
 end
