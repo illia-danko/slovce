@@ -132,11 +132,11 @@ defmodule SlivceWeb.GameLive do
 
           {:noreply,
            socket
+           |> push_event("keyboard:reset", %{})
            |> assign(game: game, stats: stats, revealing?: true, valid_guess?: true)
            |> maybe_put_game_over_message(game)
            |> maybe_show_info_dialog(game)
-           |> store_session()
-           |> push_event("keyboard:reset", %{})}
+           |> store_session()}
         else
           {:noreply, socket |> put_message("Не знайдено в словнику") |> assign(valid_guess?: false)}
         end
@@ -150,6 +150,7 @@ defmodule SlivceWeb.GameLive do
 
     socket =
       socket
+      |> push_event("keyboard:reset", %{})
       |> assign(game: game, show_info_modal?: false)
       |> store_session()
 
