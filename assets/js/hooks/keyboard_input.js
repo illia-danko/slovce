@@ -1,5 +1,5 @@
-window.__state = { guess: "" };
-let S = window.__state;
+window.__state = { keyboard_inputs: { guess: "" } };
+let S = window.__state.keyboard_inputs;
 
 function updateInputElement() {
   [...Array(5).keys()].map(index => {
@@ -22,12 +22,12 @@ function updateInputElement() {
   });
 }
 
-S.onBackspace = function () {
+S.onBackspace = function() {
   S.guess = S.guess.slice(0, -1);
   updateInputElement();
 };
 
-S.onChar = function (newChar) {
+S.onChar = function(newChar) {
   if (S.guess.length < 5) {
     S.guess = S.guess + newChar;
     updateInputElement();
@@ -38,11 +38,11 @@ export default {
   mounted() {
     let ref = this;
 
-    S.onEnter = function () {
+    S.onEnter = function() {
       ref.pushEvent("submit", { guess: S.guess });
     };
 
-    S.onKey = function ({ key }) {
+    S.onKey = function({ key }) {
       if (key === "Enter") {
         S.onEnter();
       } else if (key === "Backspace") {
@@ -91,7 +91,7 @@ export default {
       }
     };
 
-    S.keyboardClicked = function (event) {
+    S.keyboardClicked = function(event) {
       S.onKey({ key: event.detail.key });
     };
 
