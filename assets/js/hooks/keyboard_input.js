@@ -36,7 +36,7 @@ S.onChar = function(newChar) {
 
 export default {
   mounted() {
-    let self = this;
+    const self = this;
 
     S.onEnter = function() {
       self.pushEvent("submit", { guess: S.guess });
