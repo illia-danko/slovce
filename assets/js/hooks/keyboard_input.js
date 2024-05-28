@@ -36,10 +36,10 @@ S.onChar = function(newChar) {
 
 export default {
   mounted() {
-    let ref = this;
+    let self = this;
 
     S.onEnter = function() {
-      ref.pushEvent("submit", { guess: S.guess });
+      self.pushEvent("submit", { guess: S.guess });
     };
 
     S.onKey = function({ key }) {
