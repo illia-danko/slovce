@@ -20,25 +20,6 @@ defmodule SlivceWeb.GameLive do
             stats = stats_from_json_string(data)
             settings = settings_from_json_string(data)
 
-            maybe_guessed_word =
-              if Enum.empty?(game.guesses) do
-                ""
-              else
-                game.guesses
-                |> Enum.at(0)
-                |> Enum.map_join(& &1.char)
-              end
-
-            current_word = get_current_word(game)
-            word_changed? = String.upcase(maybe_guessed_word) != current_word
-
-            game =
-              if game.over? and word_changed? and game.current_word_index + 1 < get_words_of_the_day_number() do
-                new_game(game.current_word_index)
-              else
-                game
-              end
-
             {game, stats, settings}
           rescue
             _ -> init_new_game()
@@ -145,7 +126,7 @@ defmodule SlivceWeb.GameLive do
 
   @impl true
   def handle_event("restart", _, socket) do
-    new_index = socket.assigns.game.current_word_index + 1
+    new_index = rem(socket.assigns.game.current_word_index + 1, get_words_of_the_day_number())
     game = new_game(new_index)
 
     socket =
