@@ -33,7 +33,7 @@ defmodule SlivceWeb.GameLive do
             word_changed? = String.upcase(maybe_guessed_word) != current_word
 
             game =
-              if game.over? and word_changed? do
+              if game.over? and word_changed? and game.current_word_index + 1 < get_words_of_the_day_number() do
                 new_game(game.current_word_index)
               else
                 game
@@ -145,7 +145,7 @@ defmodule SlivceWeb.GameLive do
 
   @impl true
   def handle_event("restart", _, socket) do
-    new_index = rem(get_words_of_the_day_number(), socket.assigns.game.current_word_index + 1)
+    new_index = socket.assigns.game.current_word_index + 1
     game = new_game(new_index)
 
     socket =
