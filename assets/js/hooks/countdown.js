@@ -2,12 +2,20 @@ export default {
   mounted() {
     const self = this;
     const pad = num => num.toString().padStart(2, "0");
+    const tzFormatter = new Intl.DateTimeFormat("en-US", {
+      timeStyle: "short",
+      timeZone: "Europe/Kiev",
+    });
 
     function showCountdown() {
-      let now = new Date();
-      let hours = 23 - now.getUTCHours();
-      let minutes = 59 - now.getUTCMinutes();
-      let seconds = 59 - now.getUTCSeconds();
+      const now = new Date();
+      const timeZoneParts = tzFormatter.formatToParts(now).map(v => v.value);
+      const hoursTZNow = parseInt(timeZoneParts[0]);
+      const dayPeriod = timeZoneParts[4];
+
+      const hours = 23 - (dayPeriod == "PM" ? hoursTZNow + 12 : hoursTZNow);
+      const minutes = 59 - now.getUTCMinutes();
+      const seconds = 59 - now.getUTCSeconds();
       self.el.innerText = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
     }
 
