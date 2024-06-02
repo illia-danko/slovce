@@ -508,11 +508,11 @@ defmodule SlivceWeb.GameComponent do
         <% end %>
         <%= if @show_countdown? and not @has_more_games_today do %>
           <h2 class="mt-2 text-gray-800 text-lg font-semibold uppercase dark:text-white">
-            Настпупне слово за
+            Наступне слово за
           </h2>
           <div class="flex flex-col items-center text-gray-800 dark:text-white">
             <.countdown />
-            <div class="text-xs -mt-1">(за Київським часом)</div>
+            <div class="text-xs -mt-1">(опівночі за Київським часом)</div>
           </div>
         <% end %>
         <%= if @show_countdown? and @has_more_games_today do %>
