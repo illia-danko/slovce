@@ -395,7 +395,7 @@ defmodule SlivceWeb.GameComponent do
             </.help_modal_example>
 
             <div class="mt-6">
-              <p1>Кожен день з'являється <strong>1</strong> нове слово.</p1>
+              <p1>Кожен день з'являється <strong><%= get_words_of_the_day_number() %></strong> нових слів.</p1>
             </div>
           </div>
         </div>
