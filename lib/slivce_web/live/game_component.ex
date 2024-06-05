@@ -522,7 +522,7 @@ defmodule SlivceWeb.GameComponent do
                      dark:text-white rounded-md dark:border-white shadow hover:text-gray-600
                      hover:border-gray-600 dark:hover:text-gray-300 dark:hover:border-gray-300"
               type="button"
-              phx-click="restart"
+              phx-click="next-game"
             >
               Наступне Слівце
             </button>

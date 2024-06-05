@@ -1,6 +1,7 @@
 defmodule Slivce.WordServer do
   use GenServer
   alias Slivce.Words
+  alias Slivce.Utils.TimeTZ
 
   def start_link(opts) do
     GenServer.start_link(__MODULE__, :ok, opts)
@@ -51,7 +52,7 @@ defmodule Slivce.WordServer do
     |> Enum.take(get_words_of_the_day_number())
   end
 
-  defp scheduller_words_of_the_day(duration \\ next_day_duration_ms()) do
+  defp scheduller_words_of_the_day(duration \\ TimeTZ.next_day_duration_ms()) do
     words = Words.list_words()
     lookup = MapSet.new(normalize_words(words))
     state = %{words: words, lookup: lookup}
@@ -60,17 +61,6 @@ defmodule Slivce.WordServer do
     state
   end
 
-  defp next_day_duration_ms() do
-    current_datetime = Timex.now(get_timzone())
-
-    next_day = Timex.shift(current_datetime, days: 1)
-    beginning_of_next_day = Timex.beginning_of_day(next_day)
-
-    datatime_to_unix(beginning_of_next_day) - datatime_to_unix(current_datetime)
-  end
-
   defp normalize_words(words), do: words |> Enum.map(fn word -> word.title end)
-  defp datatime_to_unix(t), do: DateTime.to_unix(t, :millisecond)
   defp get_words_of_the_day_number(), do: Slivce.config([:game, :words_of_the_day_number])
-  defp get_timzone(), do: Slivce.config([:system, :timezone])
 end

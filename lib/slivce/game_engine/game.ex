@@ -1,6 +1,11 @@
 defmodule Slivce.Game do
   @derive Jason.Encoder
-  defstruct guesses: [], result: :playing, allowed_guesses: 6, current_word_index: nil, over?: false
+  defstruct guesses: [],
+            result: :playing,
+            allowed_guesses: 6,
+            current_word_index: nil,
+            played_timestamp: nil,
+            over?: false
 
   @type char_info() :: %{char: String.t(), state: :correct | :incorrect | :invalid | :empty}
   @type guess() :: list(char_info())

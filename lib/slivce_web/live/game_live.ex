@@ -1,6 +1,7 @@
 defmodule SlivceWeb.GameLive do
   use SlivceWeb, :live_view
   alias Slivce.{GameEngine, WordServer, Stats, Settings, Game}
+  alias Slivce.Utils.TimeTZ
   import SlivceWeb.GameComponent
 
   @session_key "app:session"
@@ -14,13 +15,18 @@ defmodule SlivceWeb.GameLive do
           init_new_game()
 
         %{"restore" => data} ->
-          # Wrap in try block for the case when the localStorage schmea been has changed.
+          # Wrap in try block in the case when the localStorage schema has been changed.
           try do
             game = game_from_json_string(data)
             stats = stats_from_json_string(data)
             settings = settings_from_json_string(data)
 
-            {game, stats, settings}
+            if game.played_timestamp and game.played_timestamp < TimeTZ.year_day_now() do
+              {game, stats, _settings} = init_new_game()
+              {game, stats, settings}
+            else
+              {game, stats, settings}
+            end
           rescue
             _ -> init_new_game()
           end
@@ -108,7 +114,10 @@ defmodule SlivceWeb.GameLive do
 
       _ ->
         if WordServer.valid_guess?(guess) do
-          game = GameEngine.resolve(socket.assigns.game, guess)
+          game =
+            GameEngine.resolve(socket.assigns.game, guess)
+            |> Map.put(:played_timestamp, TimeTZ.year_day_now())
+
           stats = update_stats(game, socket.assigns.stats)
 
           {:noreply,
@@ -125,8 +134,12 @@ defmodule SlivceWeb.GameLive do
   end
 
   @impl true
-  def handle_event("restart", _, socket) do
+  def handle_event("next-game", _, socket) do
     new_index = rem(socket.assigns.game.current_word_index + 1, get_words_of_the_day_number())
+    next_game(new_index, socket)
+  end
+
+  defp next_game(new_index, socket) do
     game = new_game(new_index)
 
     socket =
@@ -136,6 +149,13 @@ defmodule SlivceWeb.GameLive do
       |> store_session()
 
     {:noreply, socket}
+  end
+
+  @impl true
+  def handle_event("game:reset", _, socket) do
+    {_, socket} = next_game(0, socket)
+    game = %{socket.assigns.game | played_timestamp: nil}
+    {:noreply, assign(socket, game: game, stats: Stats.new())}
   end
 
   @impl true

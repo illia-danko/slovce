@@ -16,7 +16,12 @@ export default {
       const hours = 23 - (dayPeriod == "PM" ? hoursTZNow + 12 : hoursTZNow);
       const minutes = 59 - now.getUTCMinutes();
       const seconds = 59 - now.getUTCSeconds();
+
       self.el.innerText = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+
+      if (hours == 0 && minutes == 0 && seconds == 0) {
+        self.pushEvent("game:reset", {});
+      }
     }
 
     showCountdown(); // show immediately.
