@@ -3,6 +3,7 @@ defmodule SlivceWeb.GameLive do
   alias Slivce.{GameEngine, WordServer, Stats, Settings, Game}
   alias Slivce.Utils.TimeTZ
   import SlivceWeb.GameComponent
+  require Logger
 
   @session_key "app:session"
   @session_version 1
@@ -21,14 +22,16 @@ defmodule SlivceWeb.GameLive do
             stats = stats_from_json_string(data)
             settings = settings_from_json_string(data)
 
-            if game.played_timestamp and game.played_timestamp < TimeTZ.year_day_now() do
+            if game.played_timestamp && game.played_timestamp < TimeTZ.year_day_now() do
               {game, stats, _settings} = init_new_game()
               {game, stats, settings}
             else
               {game, stats, settings}
             end
           rescue
-            _ -> init_new_game()
+            error ->
+              Logger.error("mount: restore rescure, #{inspect(error)}")
+              init_new_game()
           end
 
         nil ->
@@ -134,9 +137,16 @@ defmodule SlivceWeb.GameLive do
   end
 
   @impl true
-  def handle_event("next-game", _, socket) do
-    new_index = rem(socket.assigns.game.current_word_index + 1, get_words_of_the_day_number())
+  def handle_event("next-game", _, %{assigns: %{game: game}} = socket) do
+    new_index = rem(game.current_word_index + 1, get_words_of_the_day_number())
     next_game(new_index, socket)
+  end
+
+  @impl true
+  def handle_event("game:reset", _, socket) do
+    {_, socket} = next_game(0, socket)
+    game = %{socket.assigns.game | played_timestamp: nil}
+    {:noreply, assign(socket, game: game, stats: Stats.new())}
   end
 
   defp next_game(new_index, socket) do
@@ -149,13 +159,6 @@ defmodule SlivceWeb.GameLive do
       |> store_session()
 
     {:noreply, socket}
-  end
-
-  @impl true
-  def handle_event("game:reset", _, socket) do
-    {_, socket} = next_game(0, socket)
-    game = %{socket.assigns.game | played_timestamp: nil}
-    {:noreply, assign(socket, game: game, stats: Stats.new())}
   end
 
   @impl true
