@@ -46,7 +46,7 @@ defmodule SlivceWeb.GameLive do
        message: nil,
        valid_guess?: true,
        settings: settings,
-       show_help_modal?: not game.over? and game.current_word_index == 0,
+       show_help_modal?: not game.over? and (game.current_word_index == 0 and length(game.guesses) == 0),
        show_info_modal?: game.over?
      )}
   end
