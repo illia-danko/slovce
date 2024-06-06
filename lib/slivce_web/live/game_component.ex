@@ -485,7 +485,9 @@ defmodule SlivceWeb.GameComponent do
         played: played,
         show_guess_dist?: show_guess_dist?,
         win_percent: win_percent,
-        has_more_games_today: has_more_games_today?
+        has_more_games_today: has_more_games_today?,
+        current_streak: assigns.stats.current_streak,
+        max_streak: assigns.stats.max_streak
       )
 
     ~H"""
@@ -495,8 +497,8 @@ defmodule SlivceWeb.GameComponent do
         <div class="flex items-start space-x-4 md:space-x-6">
           <.stat value={"#{@played}/#{get_words_of_the_day_number()}"} label_first="Зіграно" label_second="" />
           <.stat value={@win_percent} label_first="Виграно" label_second="%" />
-          <.stat value="Н/Д" label_first="Поточна" label_second="Смуга" />
-          <.stat value="Н/Д" label_first="Найбільша" label_second="Смуга" />
+          <.stat value={"#{@current_streak}"} label_first="Поточна" label_second="Смуга" />
+          <.stat value={"#{@max_streak}"} label_first="Найбільша" label_second="Смуга" />
         </div>
         <h2 class="mt-2 text-gray-800 text-lg font-semibold uppercase dark:text-white">
           Розподіл припущень

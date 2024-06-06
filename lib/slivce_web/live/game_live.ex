@@ -218,7 +218,7 @@ defmodule SlivceWeb.GameLive do
   defp update_stats(%{result: :playing}, stats), do: stats
 
   defp update_stats(%{result: :lost}, stats) do
-    %{stats | lost: stats.lost + 1}
+    %{stats | lost: stats.lost + 1, current_streak: 0}
   end
 
   defp update_stats(game, stats) do
@@ -228,9 +228,9 @@ defmodule SlivceWeb.GameLive do
 
     stats =
       if GameEngine.won?(game) do
-        %{stats | guessed_at_attempt: guessed_at_attempt}
+        %{stats | guessed_at_attempt: guessed_at_attempt, current_streak: stats.current_streak + 1}
       else
-        stats
+        %{stats | current_streak: 0}
       end
 
     %{stats | guess_distribution: Map.put(stats.guess_distribution, key, value)}
