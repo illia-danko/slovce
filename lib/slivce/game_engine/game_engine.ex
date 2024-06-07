@@ -14,7 +14,7 @@ defmodule Slivce.GameEngine do
     tiles |> Enum.map(fn %{state: state} -> state == :correct end) |> Enum.all?()
   end
 
-  def won?(game), do: game.result == :won
+  def won?(game), do: game.result == [:won]
 
   @spec analyze(Game.t(), String.t()) :: Game.guess()
   def analyze(%Game{} = game, guess) do
@@ -74,23 +74,23 @@ defmodule Slivce.GameEngine do
   end
 
   @spec resolve(Game.t(), String.t()) :: Game.t()
-  def resolve(%Game{result: :playing} = game, guess) do
+  def resolve(%Game{result: [:playing]} = game, guess) do
     guess = normalize(guess)
     tiles = analyze(game, guess)
     game = %{game | guesses: [tiles] ++ game.guesses}
 
     result =
       if winner?(tiles) do
-        :won
+        [:won]
       else
         if guesses_left(game) > 0 do
-          :playing
+          [:playing]
         else
-          :lost
+          [:lost, get_current_word(game)]
         end
       end
 
-    %{game | result: result, over?: result != :playing}
+    %{game | result: result, over?: result != [:playing]}
   end
 
   def resolve(%Game{} = game, _guess), do: game
@@ -123,6 +123,12 @@ defmodule Slivce.GameEngine do
       end)
 
     %{map | incorrect: incorrect, invalid: invalid}
+  end
+
+  defp get_current_word(game) do
+    WordServer.words_to_guess()
+    |> Enum.at(game.current_word_index)
+    |> String.upcase()
   end
 
   defp normalize(guess) when is_binary(guess), do: String.upcase(guess)

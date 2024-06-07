@@ -43,7 +43,7 @@ defmodule SlivceWeb.GameLive do
        game: game,
        stats: stats,
        revealing?: true,
-       message: nil,
+       message: Enum.at(game.result, 1) |> compound_game_over_message(),
        valid_guess?: true,
        settings: settings,
        show_help_modal?: not game.over? and (game.current_word_index == 0 and length(game.guesses) == 0),
@@ -67,9 +67,15 @@ defmodule SlivceWeb.GameLive do
 
           <div>
             <div class="flex flex-col items-center">
-              <%= if @message do %>
-                <div class="m-2 flex flex-col items-center"><.alert message={@message} /></div>
-              <% end %>
+              <div class="relative min-w-48 z-10">
+                <%= if @message do %>
+                  <div class="absolute h-full w-full flex text-center items-center justify-center -my-2">
+                    <div class="mx-2">
+                      <.alert message={@message} />
+                    </div>
+                  </div>
+                <% end %>
+              </div>
 
               <div class="">
                 <.grid
@@ -155,7 +161,7 @@ defmodule SlivceWeb.GameLive do
     socket =
       socket
       |> push_event("keyboard:reset", %{})
-      |> assign(game: game, show_info_modal?: false)
+      |> assign(game: game, show_info_modal?: false, message: nil)
       |> store_session()
 
     {:noreply, socket}
@@ -170,10 +176,12 @@ defmodule SlivceWeb.GameLive do
     {:noreply, assign(socket, show_info_modal?: true)}
   end
 
-  defp put_message(socket, message) do
-    Process.send_after(self(), :clear_message, 2000)
+  defp put_message(socket, message, temporary: temporary) do
+    if temporary, do: Process.send_after(self(), :clear_message, 2000)
     assign(socket, message: message)
   end
+
+  defp put_message(socket, message), do: put_message(socket, message, temporary: true)
 
   defp maybe_show_info_dialog(socket, %{over?: false}) do
     socket
@@ -186,8 +194,11 @@ defmodule SlivceWeb.GameLive do
 
   defp maybe_put_game_over_message(socket, %{over?: false}), do: socket
 
-  defp maybe_put_game_over_message(socket, %{result: :lost} = game),
-    do: put_message(socket, "Слово було #{get_current_word(game)}")
+  defp maybe_put_game_over_message(socket, %{result: [:lost, actual_word]} = game),
+    do: put_message(socket, compound_game_over_message(actual_word), temporary: false)
+
+  defp compound_game_over_message(actual_word) when is_binary(actual_word), do: "Слово було #{actual_word}"
+  defp compound_game_over_message(actual_word), do: nil
 
   defp maybe_put_game_over_message(socket, %{} = game) do
     message =
@@ -215,9 +226,9 @@ defmodule SlivceWeb.GameLive do
 
   defp new_game(current_word_index), do: GameEngine.new(current_word_index)
 
-  defp update_stats(%{result: :playing}, stats), do: stats
+  defp update_stats(%{result: [:playing]}, stats), do: stats
 
-  defp update_stats(%{result: :lost}, stats) do
+  defp update_stats(%{result: [:lost, _actual_word]}, stats) do
     %{stats | lost: stats.lost + 1, current_streak: 0, max_streak: max(0, stats.max_streak)}
   end
 
@@ -246,7 +257,10 @@ defmodule SlivceWeb.GameLive do
     %{game: game_data} = Jason.decode!(data, keys: :atoms)
     game = struct!(Slivce.Game, game_data)
 
-    result = String.to_existing_atom(game.result)
+    result =
+      case game.result do
+        [first | rest] -> [String.to_existing_atom(first) | rest]
+      end
 
     guesses =
       Enum.map(game.guesses, fn guess ->
@@ -271,12 +285,6 @@ defmodule SlivceWeb.GameLive do
     %{settings: settings_data} = Jason.decode!(data, keys: :atoms)
     settings = struct!(Settings, settings_data)
     %{settings | theme: String.to_existing_atom(settings.theme)}
-  end
-
-  defp get_current_word(game) do
-    WordServer.words_to_guess()
-    |> Enum.at(game.current_word_index)
-    |> String.upcase()
   end
 
   defp get_words_of_the_day_number(), do: Slivce.config([:game, :words_of_the_day_number])

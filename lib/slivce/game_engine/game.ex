@@ -1,7 +1,7 @@
 defmodule Slivce.Game do
   @derive Jason.Encoder
   defstruct guesses: [],
-            result: :playing,
+            result: [:playing],
             allowed_guesses: 6,
             current_word_index: nil,
             played_timestamp: nil,
@@ -12,7 +12,7 @@ defmodule Slivce.Game do
 
   @type t() :: %__MODULE__{
           guesses: list(guess),
-          result: :playing | :lost | :won,
+          result: List.t(),
           allowed_guesses: Integer.t(),
           current_word_index: Integer.t(),
           over?: Boolean.t()

@@ -74,10 +74,8 @@ defmodule SlivceWeb.GameComponent do
 
   def alert(assigns) do
     ~H"""
-    <div class="rounded bg-gray-800 p-4 dark:bg-gray-50">
-      <div class="flex items-center justify-center">
-        <p class="text-white text-xl dark:text-gray-800"><%= @message %></p>
-      </div>
+    <div class="rounded bg-gray-800 p-1 dark:bg-gray-50">
+      <p class="text-white text-xl dark:text-gray-800"><%= @message %></p>
     </div>
     """
   end
