@@ -269,9 +269,9 @@ defmodule SlivceWeb.GameComponent do
   def modal_menu(assigns) do
     class =
       if Map.get(assigns, :open?, false) do
-        "fixed z-10 inset-0 overflow-y-auto"
+        "fixed z-20 inset-0 overflow-y-auto"
       else
-        "fixed z-10 inset-0 overflow-y-auto hidden"
+        "fixed z-20 inset-0 overflow-y-auto hidden"
       end
 
     assigns = assign(assigns, class: class)
