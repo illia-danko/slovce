@@ -218,22 +218,28 @@ defmodule SlivceWeb.GameLive do
   defp update_stats(%{result: :playing}, stats), do: stats
 
   defp update_stats(%{result: :lost}, stats) do
-    %{stats | lost: stats.lost + 1, current_streak: 0}
+    %{stats | lost: stats.lost + 1, current_streak: 0, max_streak: max(0, stats.max_streak)}
   end
 
   defp update_stats(game, stats) do
-    guessed_at_attempt = abs(GameEngine.guesses_left(game) - 6)
+    {guessed_at_attempt, current_streak} =
+      if GameEngine.won?(game) do
+        {abs(GameEngine.guesses_left(game) - 6), stats.current_streak + 1}
+      else
+        {stats.guessed_at_attempt, 0}
+      end
+
+    max_streak = max(current_streak, stats.max_streak)
     key = Integer.to_string(guessed_at_attempt)
     value = stats.guess_distribution[key] + 1
 
-    stats =
-      if GameEngine.won?(game) do
-        %{stats | guessed_at_attempt: guessed_at_attempt, current_streak: stats.current_streak + 1}
-      else
-        %{stats | current_streak: 0}
-      end
-
-    %{stats | guess_distribution: Map.put(stats.guess_distribution, key, value)}
+    %{
+      stats
+      | guess_distribution: Map.put(stats.guess_distribution, key, value),
+        guessed_at_attempt: guessed_at_attempt,
+        current_streak: current_streak,
+        max_streak: max_streak
+    }
   end
 
   defp game_from_json_string(data) do
