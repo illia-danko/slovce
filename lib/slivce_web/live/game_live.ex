@@ -137,7 +137,7 @@ defmodule SlivceWeb.GameLive do
   end
 
   @impl true
-  def handle_event("next-game", _, %{assigns: %{game: game}} = socket) do
+  def handle_event("game:next", _, %{assigns: %{game: game}} = socket) do
     new_index = rem(game.current_word_index + 1, get_words_of_the_day_number())
     next_game(new_index, socket)
   end
