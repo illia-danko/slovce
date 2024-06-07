@@ -635,8 +635,8 @@ defmodule SlivceWeb.GameComponent do
     ~H"""
     <div class="m-2 sm:m-4 text-center text-xs font-medium tracking-wide dark:text-white">
       <h3>
-        Розроблено <a href="https://github.com/holandes22"><strong>Pablo Klijnjan</strong></a>
-        та <a href="https://github.com/illia-danko"><strong>Иллєю Данько</strong></a>
+        Розроблено <a href="https://github.com/illia-danko"><strong>Иллєю Данько</strong></a>
+        та <a href="https://github.com/holandes22"><strong>Pablo Klijnjan</strong></a>
       </h3>
       <h3>
         Ідея - <a href="https://en.wikipedia.org/wiki/Josh_Wardle"><strong>Josh Wardle</strong></a>
