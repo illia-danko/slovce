@@ -194,11 +194,8 @@ defmodule SlivceWeb.GameLive do
 
   defp maybe_put_game_over_message(socket, %{over?: false}), do: socket
 
-  defp maybe_put_game_over_message(socket, %{result: [:lost, actual_word]} = game),
+  defp maybe_put_game_over_message(socket, %{result: [:lost, actual_word]}),
     do: put_message(socket, compound_game_over_message(actual_word), temporary: false)
-
-  defp compound_game_over_message(actual_word) when is_binary(actual_word), do: "Слово було #{actual_word}"
-  defp compound_game_over_message(actual_word), do: nil
 
   defp maybe_put_game_over_message(socket, %{} = game) do
     message =
@@ -213,6 +210,9 @@ defmodule SlivceWeb.GameLive do
 
     put_message(socket, message)
   end
+
+  defp compound_game_over_message(actual_word) when is_binary(actual_word), do: "Слово було #{actual_word}"
+  defp compound_game_over_message(_actual_word), do: nil
 
   defp store_session(%{assigns: assigns} = socket) do
     data =

@@ -12,7 +12,7 @@ defmodule Slivce.Game do
 
   @type t() :: %__MODULE__{
           guesses: list(guess),
-          result: List.t(),
+          result: [:playing] | [:won] | [:lost, ...],
           allowed_guesses: Integer.t(),
           current_word_index: Integer.t(),
           over?: Boolean.t()
