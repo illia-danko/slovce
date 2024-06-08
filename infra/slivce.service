@@ -1,0 +1,13 @@
+[Unit]
+Description=Slivce
+After=network.target
+StartLimitIntervalSec=1
+
+[Service]
+EnvironmentFile=/var/server/slivce/env.conf
+ExecStart=/var/server/slivce/_build/prod/rel/slivce/bin/slivce start
+TimeoutSec=30
+Restart=on-failure
+RestartSec=30
+StartLimitInterval=350
+StartLimitBurst=10
