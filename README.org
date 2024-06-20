@@ -4,13 +4,13 @@
 #+ATTR_ORG: :align center
 Visit https://slivce.net to play!
 
+** /The project is under active development! You may face some bugs/
+
 [[application_example3.jpeg]]
 
 [[application_example1.jpeg]]
 
 [[application_example2.jpeg]]
-
-** /The project is under active development! You may face some bugs/
 
 * The Reason
 The main purpose is not just yet another clone of notorious Wordle Game translated into another language or a simple clone, but helps Ukrainians to get rid of the russian influence, and assists in developing Ukrainian language vocabulary by having fun.
