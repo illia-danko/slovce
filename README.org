@@ -1,19 +1,29 @@
 * Slivce - Wordle in Ukrainian
 
-https://slivce.net
-
-/The project under active development! You may face some bugs./ 
-
 #+ATTR_HTML: :align center 
 #+ATTR_ORG: :align center
+Visit https://slivce.net to play!
+
 [[application_example3.jpeg]]
 
+[[application_example1.jpeg]]
+
+[[application_example2.jpeg]]
+
+** /The project is under active development! You may face some bugs/
 
 * The Reason
-The main purpose is not just yet another clone of notorious Wordle Game translated into another language or a simple clone, but helps Ukrainians to get rid of the russian influence, and assists in developing Ukrainian vocabulary by having fun.
+The main purpose is not just yet another clone of notorious Wordle Game translated into another language or a simple clone, but helps Ukrainians to get rid of the russian influence, and assists in developing Ukrainian language vocabulary by having fun.
 
 * Installing
 
 #+begin_src bash
 make deps database_init compile
 #+end_src
+
+* Running locally
+
+#+begin_src bash
+make live
+#+end_src
+
