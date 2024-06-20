@@ -1,10 +1,12 @@
 * Slivce - Wordle in Ukrainian
 
-#+ATTR_HTML: :align center 
-#+ATTR_ORG: :align center
+#+begin_center
 Visit https://slivce.net to play!
+#+end_center
 
-** /The project is under active development! You may face some bugs/
+** /The project is under development! Features are limited, bugs might happen/
+\\
+\\
 
 [[application_example3.jpeg]]
 
