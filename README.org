@@ -7,13 +7,12 @@ Visit https://slivce.net to play!
 ** /The project is under development! Features are limited, bugs might happen/
 
 ** Screenshots
-
 - [[application_example3.jpeg]]
 - [[application_example1.jpeg]]
 - [[application_example2.jpeg]]
 
 * The Reason
-The main purpose is not just yet another clone of notorious Wordle Game translated into another language or a simple clone, but helps Ukrainians to get rid of the russian influence, and assists in developing Ukrainian language vocabulary by having fun.
+The main purpose is not just yet another clone of notorious Wordle Game translated into another language or a simple clone, but helps Ukrainians to get rid of the russian influence, and assists in developing Ukrainian vocabulary by having fun.
 
 * Installing
 
